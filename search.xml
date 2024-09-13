@@ -4,6 +4,31 @@
   
     
     <entry>
+      <title>MOE基础介绍</title>
+      <link href="/2024/09/13/MOE-Intro/"/>
+      <url>/2024/09/13/MOE-Intro/</url>
+      
+        <content type="html"><![CDATA[<p>MOE重要性：坊间一直流传GPT-4是MoE模型<br>本文主要参考自：<a href="https://huggingface.co/blog/zh/moe">https://huggingface.co/blog/zh/moe</a></p><h1 id="什么是MOE"><a href="#什么是MOE" class="headerlink" title="什么是MOE"></a>什么是MOE</h1><p>基于 Transformer 架构的模型，混合专家模型主要由两个关键部分组成:</p><p>● <strong>稀疏 MoE 层</strong>: 这些层代替了传统 Transformer 模型中的前馈网络 (FFN) 层。MoE 层包含若干“专家”(例如 8 个)，每个专家本身是一个独立的神经网络。在实际应用中，这些专家通常是前馈网络 (FFN)，但它们也可以是更复杂的网络结构，甚至可以是 MoE 层本身，从而形成层级式的 MoE 结构。</p><p>● <strong>门控网络或路由</strong>: 这个部分用于决定哪些令牌 (token) 被发送到哪个专家。例如，在下图中，“More”这个令牌可能被发送到第二个专家，而“Parameters”这个令牌被发送到第一个专家。有时，一个令牌甚至可以被发送到多个专家。令牌的路由方式是 MoE 使用中的一个关键点，因为路由器由学习的参数组成，并且与网络的其他部分一同进行预训练。</p><p><img src="/posts_img/MOE-Intro/1.png"></p><div style="text-align: center;">  <a href="https://arxiv.org/pdf/1701.06538">Outrageously Large Neural Network 论文中的 MoE layer</a></div><p><img src="/posts_img/MOE-Intro/2.png"></p><div style="text-align: center;">  <a href="https://arxiv.org/pdf/2101.03961">Switch Transformers paper 论文中的 MoE layer</a></div><h1 id="混合专家模型（MoEs）简短总结"><a href="#混合专家模型（MoEs）简短总结" class="headerlink" title="混合专家模型（MoEs）简短总结"></a>混合专家模型（MoEs）简短总结</h1><h2 id="优点"><a href="#优点" class="headerlink" title="优点"></a>优点</h2><p>● 与稠密模型相比，<strong>预训练速度更快</strong><br>● 与具有相同参数数量的模型相比，具有更快的 <strong>推理速度</strong><br>● 与具有相同激活参数的稠密模型模型相比，具有更高的 <strong>推理精度</strong></p><h2 id="缺点"><a href="#缺点" class="headerlink" title="缺点"></a>缺点</h2><p>● 需要 <strong>大量显存</strong>，因为所有专家系统都需要加载到内存中（现有offload技术）<br>● 在 <strong>微调方面</strong> 存在诸多挑战，但 <a href="https://arxiv.org/pdf/2305.14705">近期的研究</a> 表明，对混合专家模型进行指令调优具有很大的潜力<br>● 不同的专家倾向于专注于不同的 <strong>语义</strong>，而不是特定 <strong>领域</strong><br>● 由于设备间需要传递数据，网络带宽常常成为性能瓶颈，应采取适当的并行化策略（3D并行+专家并行）</p><h1 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h1><p>[1] Outrageously Large Neural Networks: The Sparsely-Gated Mixture-of-Experts Layer (2017)<br>[2] Switch Transformers: Scaling to Trillion Parameter Models with Simple and Efficient Sparsity (Jan 2022)</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> LLM </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> MOE </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>MOE利用Offload进行高效推理！</title>
       <link href="/2024/09/12/MOE-Offloading/"/>
       <url>/2024/09/12/MOE-Offloading/</url>
@@ -12,6 +37,8 @@
       
       
       <categories>
+          
+          <category> Paper Report </category>
           
           <category> LLM </category>
           
