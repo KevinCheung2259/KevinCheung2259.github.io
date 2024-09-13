@@ -13,12 +13,14 @@
       
       <categories>
           
-          <category> LLM </category>
+          <category> Intro </category>
           
       </categories>
       
       
         <tags>
+            
+            <tag> LLM </tag>
             
             <tag> MOE </tag>
             
@@ -40,12 +42,12 @@
           
           <category> Paper Report </category>
           
-          <category> LLM </category>
-          
       </categories>
       
       
         <tags>
+            
+            <tag> LLM </tag>
             
             <tag> MOE </tag>
             
