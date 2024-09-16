@@ -72,7 +72,7 @@ index_img: static_img/稻城亚丁.jpg
 
 # If the banner of page not setting, it will show the top_img
 # default_top_img: 'linear-gradient(20deg, #0062be, #925696, #cc426e, #fb0347)'
-default_top_img: 
+default_top_img: static_img/plane1.jpg
 
 # The banner image of archive page
 archive_img: static_img/archive_img.png
@@ -257,7 +257,7 @@ aside:
     fas fa-envelope-open-text: mailto:2651309292.com || Email
   card_announcement:
     enable: true
-    content: 初次见面，请多多关照！
+    content: 任重道远，毋忘奋斗
   card_recent_post:
     enable: true
     limit: 5 # if set 0 will show all
