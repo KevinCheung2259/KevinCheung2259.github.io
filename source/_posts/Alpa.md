@@ -1,6 +1,6 @@
 ---
 layout: fast
-title: Alpa-自动生成DL模型并行策略
+title: Alpa-自动生成DL/LLM模型并行策略
 date: 2024-09-19 00:41:49
 summary: 
 cover: posts_img/Alpa/cover.png
