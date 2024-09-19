@@ -13,7 +13,7 @@ tags:
 
 LLM在处理大量请求时面临内存使用效率低下的问题，每个请求需占用大量动态变化的内存，导致浪费并限制处理能力。本文提出了PagedAttention算法，受操作系统虚拟内存分页技术启发，开发了vLLM服务系统。vLLM通过灵活共享内存，实现几乎零内存浪费，显著降低了内存需求。测试表明，vLLM处理吞吐量比FasterTransformer和Orca提高2到4倍，且延迟保持相同，尤其在处理长文本、大模型和复杂解码时表现突出。
 
-论文：https://dl.acm.org/doi/pdf/10.1145/3600006.3613165
+论文：(SOSP 2023)![Efficient Memory Management for Large Language Model Serving with PagedAttention](https://dl.acm.org/doi/pdf/10.1145/3600006.3613165)
 代码：https://github.com/vllm-project/vllm
 文章参考自：https://mp.weixin.qq.com/s/whsGK2gfVrIDNXTtxUUSOw
 

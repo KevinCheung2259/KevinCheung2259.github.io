@@ -14,7 +14,7 @@ tags:
 
 本文提出了一种新的分布式服务系统 ORCA，针对大规模 Transformer 模型的自回归生成任务，解决了现有推理服务系统在多迭代特性任务上表现不佳的问题。ORCA 通过引入 **迭代级调度** 和 **选择性批处理** 两项技术，实现了更灵活高效的调度。实验结果表明，在处理 GPT-3 175B 模型时，ORCA 在保持相同延迟的情况下，吞吐量较 NVIDIA FasterTransformer 提升了 36.9 倍。
 
-论文：[ORCA: A Distributed Serving System for Transformer-Based Generative Models](https://www.usenix.org/conference/osdi22/presentation/yu)
+论文：(OSDI 2022)[ORCA: A Distributed Serving System for Transformer-Based Generative Models](https://www.usenix.org/conference/osdi22/presentation/yu)
 
 # 引言
 本文讨论了在服务大规模 Transformer 模型时面临的挑战，特别是用于生成任务的模型，如语言生成、代码生成等。典型的例子包括 GPT-3 这样的模型。随着对模型需求的不断增长，低延迟和高吞吐量成为推理系统的目标，早期通过使用如Triton和FasterTransformer的组合来部署服务，Triton主要负责将多个客户端请求分组到一个批中，而FasterTransformer作为模型推理进行优化的执行引擎从Triton接收该批，并以批处理的方式进行推理过程。这些模型通过一种多次迭代的自回归方式处理文本（即每次生成一个词元），这给现有系统带来了特定的挑战。
