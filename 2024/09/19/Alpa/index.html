@@ -1,0 +1,258 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>Alpa-自动生成DL模型并行放置策略 | Cheung's Blog</title><meta name="author" content="Cheung"><meta name="copyright" content="Cheung"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="只要输入DL模型 computation graph 和 device cluster，Alpa 通过生成统一数据、运算和流水线并行性的执行计划，在可接受的时间内自动化了大型深度学习（DL）模型的模型并行训练。 现有的模型并行训练系统要么要求用户手动创建并行化计划，要么从有限的模型并行配置空间中自动生成一个。它们不足以在分布式计算设备上扩展复杂的DL模型。Alpa通过将并行性视为两个层次来分配大型">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Alpa-自动生成DL模型并行放置策略">
+<meta property="og:url" content="http://kevin-zhang-sysu.github.io/2024/09/19/Alpa/index.html">
+<meta property="og:site_name" content="Cheung&#39;s Blog">
+<meta property="og:description" content="只要输入DL模型 computation graph 和 device cluster，Alpa 通过生成统一数据、运算和流水线并行性的执行计划，在可接受的时间内自动化了大型深度学习（DL）模型的模型并行训练。 现有的模型并行训练系统要么要求用户手动创建并行化计划，要么从有限的模型并行配置空间中自动生成一个。它们不足以在分布式计算设备上扩展复杂的DL模型。Alpa通过将并行性视为两个层次来分配大型">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://kevin-zhang-sysu.github.io/posts_img/Alpa/cover.png">
+<meta property="article:published_time" content="2024-09-18T16:41:49.000Z">
+<meta property="article:modified_time" content="2024-09-19T17:11:19.408Z">
+<meta property="article:author" content="Cheung">
+<meta property="article:tag" content="LLM">
+<meta property="article:tag" content="DL">
+<meta property="article:tag" content="Train">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://kevin-zhang-sysu.github.io/posts_img/Alpa/cover.png"><link rel="shortcut icon" href="/static_img/me.jpg"><link rel="canonical" href="http://kevin-zhang-sysu.github.io/2024/09/19/Alpa/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//www.google-analytics.com" crossorigin=""/><link rel="preconnect" href="//hm.baidu.com"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=4.13.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?d65eed546e2912533944787b69fa83eb";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script><script async="async" src="https://www.googletagmanager.com/gtag/js?id=G-RYGQ5K1B81"></script><script>window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-RYGQ5K1B81');
+</script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"找不到您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":false,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.11.1/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyload: true,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Alpa-自动生成DL模型并行放置策略',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2024-09-20 01:11:19'
+}</script><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+        if (t === 'dark') activateDarkMode()
+        else if (t === 'light') activateLightMode()
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><meta name="generator" content="Hexo 7.3.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src= "/static_img/loading.gif" data-lazy-src="/static_img/me.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">6</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">5</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">2</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fa fa-graduation-cap"></i><span> 博文</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/categories/"><i class="fa-fw fa fa-archive"></i><span> 分类</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/archives/"><i class="fa-fw fa fa-folder-open"></i><span> 归档</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/links/"><i class="fa-fw fa fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/comment/"><i class="fa-fw fa fa-paper-plane"></i><span> 留言板</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于笔者</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('/posts_img/Alpa/cover.png')"><nav id="nav"><span id="blog-info"><a href="/" title="Cheung's Blog"><span class="site-name">Cheung's Blog</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fa fa-graduation-cap"></i><span> 博文</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/categories/"><i class="fa-fw fa fa-archive"></i><span> 分类</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/archives/"><i class="fa-fw fa fa-folder-open"></i><span> 归档</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/links/"><i class="fa-fw fa fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/comment/"><i class="fa-fw fa fa-paper-plane"></i><span> 留言板</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于笔者</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">Alpa-自动生成DL模型并行放置策略</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2024-09-18T16:41:49.000Z" title="发表于 2024-09-19 00:41:49">2024-09-19</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-09-19T17:11:19.408Z" title="更新于 2024-09-20 01:11:19">2024-09-20</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Paper-Report/">Paper Report</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">2.2k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>7分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="Alpa-自动生成DL模型并行放置策略"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>只要输入DL模型 computation graph 和 device cluster，Alpa 通过生成统一<strong>数据</strong>、<strong>运算</strong>和<strong>流水线</strong>并行性的执行计划，在<strong>可接受</strong>的时间内<strong>自动化</strong>了大型深度学习（DL）模型的模型并行训练。</p>
+<p>现有的模型并行训练系统要么要求用户手动创建并行化计划，要么从有限的模型并行配置空间中自动生成一个。它们不足以在分布式计算设备上扩展复杂的DL模型。Alpa通过将并行性视为两个层次来分配大型DL模型的训练：**运算内并行性(inter-operator)<strong>和</strong>运算间并行性(intra-operator)**。</p>
+<p>基于此，Alpa为大规模模型并行执行计划构建了一个新的层次空间。Alpa设计了许多编译过程，以在每个并行级别自动导出高效的并行执行计划。Alpa实现了高效的运行时，以协调分布式计算设备上的两级并行执行。评估表明，Alpa生成的并行化计划与手动调优的模型并行训练系统相匹配或优于后者，即使在它们设计的模型上也是如此。与专用系统不同，Alpa还可以推广到具有异构架构的模型和没有手动设计计划的模型。</p>
+<p>论文：(OSDI 2022)<a target="_blank" rel="noopener" href="https://www.usenix.org/system/files/osdi23-li-zhuohan.pdf">Alpa: Automating Inter- and Intra-Operator Parallelism for Distributed Deep Learning</a></p>
+<p>源代码：<a target="_blank" rel="noopener" href="https://github.com/alpa-projects/alpa">https://github.com/alpa-projects/alpa</a>.</p>
+<p>文章参考自：</p>
+<ol>
+<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/487588274">https://zhuanlan.zhihu.com/p/487588274</a></li>
+<li><a target="_blank" rel="noopener" href="https://research.google/blog/alpa-automated-model-parallel-deep-learning/">https://research.google/blog/alpa-automated-model-parallel-deep-learning/</a></li>
+</ol>
+<h1 id="Alpa概念"><a href="#Alpa概念" class="headerlink" title="Alpa概念"></a>Alpa概念</h1><p>作者首先将现有的机器学习并行化策略分为两类：</p>
+<ol>
+<li>运算内并行-Intra-Operator Parallelism：将Tensor按某些维度切裂，放到不同Device上计算的并行方式。如张量并行（如Megatron-LM）、数据并行（如Deepspeed Zero）、专家并行（如GShard MoE）。</li>
+<li>运算间并行-Inter-Operator Parallelism：即流水线并行</li>
+</ol>
+<p>两类并行方式的特点：</p>
+<ol>
+<li>Intra-op Parallelism：通讯量较大，可充分利用带宽，切分带来的通信基本属于高效的集合通信。</li>
+<li>Inter-op Parallelism：只在两个设备间传输数据，通讯量较小，若切点寻找的合适，则通信较小，但同步版本的策略无可避免的会引来Bubble。</li>
+</ol>
+<p>可以利用cluster的非对称特性，将Intra-op Parallelism映射到高带宽互联的devices上；将Inter-op Parallelism映射到低带宽互联的devices上。如此组合，就能释放更大的算力。Alpa会自动探索这些策略及组合情况。</p>
+<p>在GPU集群中，节点内的GPU具有更高的通信带宽，可以适应运算内的并行性。然而，不同节点上的GPU通常以较低的带宽连接（例如以太网），因此首选运算间并行。</p>
+<p>之所以要做这两种区分，目的是为了在不同的level上做策略搜索，然后将二者组合起来，生成大一统的并行方式的执行计划。总结起来就是以下两个点：</p>
+<p>将并行度视为两级：intra-operator和inter-operator，构建分级的解空间<br>在两级空间中<strong>分别</strong>探索最优解，然后提供高效的Runtime将二者编排起来（总体上不能保证全局最优，但是实践证明在大模型上有很强的性能提升）。</p>
+<h1 id="Alpa的Workflow"><a href="#Alpa的Workflow" class="headerlink" title="Alpa的Workflow"></a>Alpa的Workflow</h1><p>Alpa工作在DL编译层（基于XLA，在HLO上进行策略探索），所以文中也称之为——自动生成分布式策略的DL编译器。当用户给出模型计算图和设备集群时，它会进行各种操作流。</p>
+<ol>
+<li>运算间并行操作流-Intra-Operator Pass：传递将计算图切分为子图，将设备集群切片为子表（即分区设备集群），并确定将子图与子表的最佳配对方式。</li>
+<li>运算内并行操作流-Inter-Operator Pass：为运算间并行的每个流水线阶段找到最佳的运算内并行计划。</li>
+<li>运行时编排操作流-Runtime Orchestration pass：生成一个静态计划，对计算和通信进行排序，并在实际设备集群上执行分布式计算图（做runtime缝合的事情。比如stage调度，通信优化等，显然这个pass和策略搜索没什么关系）。</li>
+</ol>
+<p>在宏观上做DP，微观上ILP，Inter-op和Intra-op两个pass不断迭代最终获得最佳方案。</p>
+<p>下图中，在切片子图中，红色和蓝色表示运算的划分方式，灰色表示复制的运算，绿色代表实际设备（例如GPU）：</p>
+<p><img src= "/static_img/loading.gif" data-lazy-src="/posts_img/Alpa/1.gif" alt="Alpa概述。在切片子图中，红色和蓝色表示运算的划分方式，灰色表示复制的运算，绿色代表实际设备（例如GPU）。"></p>
+<h2 id="运算内并行操作流（Intra-Operator-Pass）"><a href="#运算内并行操作流（Intra-Operator-Pass）" class="headerlink" title="运算内并行操作流（Intra-Operator Pass）"></a>运算内并行操作流（Intra-Operator Pass）</h2><p>与之前的研究（例如Mesh TensorFlow和GSPMD）类似，运算内并行性在设备网格上划分张量。下图显示了Transformer模型中具有给定批次、序列和隐藏维度的典型3D张量。批处理维度沿着设备网格维度0（mesh0）进行划分，隐藏维度沿着网格维度1（mesh1）进行分区，序列维度被复制到每个处理器。</p>
+<p>在2D设备网格上划分的3D张量：<br><img src= "/static_img/loading.gif" data-lazy-src="/posts_img/Alpa/2.png" alt="在2D设备网格上划分的3D张量"></p>
+<p>通过Alpa中张量的划分，进一步为计算图中的每个独立运算定义了一组并行化策略。在下图中展示了矩阵乘法的并行化策略示例。在运算符上定义并行化策略可能会导致张量分区上的冲突，因为一个张量既可以是一个运算符的输出，也可以是另一个运算的输入。若分区方式不匹配，两个运算之间需要重新分区，这会产生额外的通信成本。</p>
+<p>矩阵乘法的并行化策略：<br><img src= "/static_img/loading.gif" data-lazy-src="/posts_img/Alpa/3.png" alt="矩阵乘法的并行化策略"></p>
+<p>给定每个运算和re-partition成本，作者将运算内操作流表示为整数线性规划（ILP）问题。对于每个运算，定义一个one-hot向量来枚举分区策略。ILP的目标是最小化计算和通信成本（节点成本）和重新划分通信成本（边成本）的总和。ILP的解决方案转化为一种特定的方法来分割原始计算图。</p>
+<p><img src= "/static_img/loading.gif" data-lazy-src="/posts_img/Alpa/4.png"></p>
+<h2 id="运算间并行操作流（Inter-Operator-Pass）"><a href="#运算间并行操作流（Inter-Operator-Pass）" class="headerlink" title="运算间并行操作流（Inter-Operator Pass）"></a>运算间并行操作流（Inter-Operator Pass）</h2><p>运算间传递对计算图和设备集群进行切片，以实现流水线并行性。如下图所示，方框表示输入的微批，流水线阶段表示执行子图的子网格。水平维度表示时间，并显示执行微批处理的传递阶段。运算间传递的目标是最大限度地减少总执行延迟，即设备上整个工作负载执行的总和。Alpa使用动态规划（DP）算法来最小化总延迟。计算图首先被展平，然后执行Intra-Operator Pass，对设备集群到子表的所有可能分区的性能进行分析。</p>
+<p>对于给定的时间，此图显示了分区设备集群和计算图切片（例如，阶段1、2、3）正在处理的微批（彩色框）：<br><img src= "/static_img/loading.gif" data-lazy-src="/posts_img/Alpa/6.png" alt="流水线并行。对于给定的时间，此图显示了分区设备集群和计算图切片（例如，阶段1、2、3）正在处理的微批（彩色框）。"></p>
+<h1 id="评估"><a href="#评估" class="headerlink" title="评估"></a>评估</h1><p>使用8个AWS p3.16xlarge实例测试Alpa，每个实例有8个16GB V100 GPU，总共64个GPU。研究了在增加GPU数量的同时增加模型大小的弱缩放结果。我们评估了三种模型：</p>
+<ol>
+<li>标准Transformer模型（GPT）；</li>
+<li>GShard MoE模型，一种混合了专家层的Transformer；</li>
+<li>Wide ResNet，一个明显不同的模型，没有现有的专家设计的模型并行化策略。性能是通过集群上每秒实现的peta浮点运算（PFLOPS）来衡量的。</li>
+</ol>
+<p>作者证明，对于GPT，Alpa输出的并行化策略与现有最佳框架Megatron ML计算的策略非常相似，并与其性能相匹配。对于GShard MoE来说，Alpa在GPU（即Deepspeed）上的表现比专家设计的最佳基线高出8倍。Wide ResNet的结果表明，Alpa可以为专家尚未研究的模型生成最佳并行化策略。本文还展示了线性缩放数以供参考。</p>
+<p><img src= "/static_img/loading.gif" data-lazy-src="/posts_img/Alpa/7.png"></p>
+<p>在16个GPU上，Alpa将模型分为3个阶段，并分别为第1、2、3阶段分配4、4、8个GPU。在前两个阶段，数据并行性是首选，因为激活张量大于权重张量。在第三阶段，ILP求解器找到了一种划分卷积算子的非平凡方法。结果表明，对于像Wide ResNet这样的异构模型，即使对于领域专家来说，手动创建这样的策略也可能是困难的。</p>
+<p>Alpa在16个GPU上为WideResNet找到的并行化策略：<br><img src= "/static_img/loading.gif" data-lazy-src="/posts_img/Alpa/8.png" alt="Alpa在16个GPU上为WideResNet找到的并行化策略"></p>
+<h1 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h1><p>为分布式模型并行深度学习设计有效的并行化计划的过程历来是一项困难且劳动密集型的任务。Alpa是一个新的框架，它利用运算内和运算间的并行性进行自动化模型并行分布式训练。我们相信Alpa将使分布式模型并行学习规范化，并加速大型深度学习模型的开发。</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a target="_blank" rel="noopener" href="https://github.com/Kevin-Zhang-SYSU">Cheung</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="http://kevin-zhang-sysu.github.io/2024/09/19/Alpa/">http://kevin-zhang-sysu.github.io/2024/09/19/Alpa/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://Kevin-Zhang-SYSU.github.io" target="_blank">Cheung's Blog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/LLM/">LLM</a><a class="post-meta__tags" href="/tags/DL/">DL</a><a class="post-meta__tags" href="/tags/Train/">Train</a></div><div class="post_share"><div class="social-share" data-image="/posts_img/Alpa/cover.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/js/social-share.min.js" defer></script></div></div><div class="post-reward"><div class="reward-button"><i class="fas fa-qrcode"></i>赞助</div><div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="/static_img/wechat.jpg" target="_blank"><img class="post-qr-code-img" src= "/static_img/loading.gif" data-lazy-src="/static_img/wechat.jpg" alt="微信"/></a><div class="post-qr-code-desc">微信</div></li><li class="reward-item"><a href="/static_img/alipay.jpg" target="_blank"><img class="post-qr-code-img" src= "/static_img/loading.gif" data-lazy-src="/static_img/alipay.jpg" alt="支付宝"/></a><div class="post-qr-code-desc">支付宝</div></li></ul></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/2024/09/14/vLLM/" title="vLLM-高效管理内存的LLM推理系统"><img class="cover" src= "/static_img/loading.gif" data-lazy-src="/posts_img/vLLM/6.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">vLLM-高效管理内存的LLM推理系统</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2024/09/12/MOE-Offloading/" title="MOE利用Offload进行高效推理"><img class="cover" src= "/static_img/loading.gif" data-lazy-src="/posts_img/MOE-Offloading/1.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-09-12</div><div class="title">MOE利用Offload进行高效推理</div></div></a></div><div><a href="/2024/09/14/Orca/" title="Orca-大模型推理系统开山之作"><img class="cover" src= "/static_img/loading.gif" data-lazy-src="/posts_img/Orca/cover.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-09-14</div><div class="title">Orca-大模型推理系统开山之作</div></div></a></div><div><a href="/2024/09/13/MOE-Intro/" title="MOE基础介绍"><img class="cover" src= "/static_img/loading.gif" data-lazy-src="/posts_img/MOE-Intro/1.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-09-13</div><div class="title">MOE基础介绍</div></div></a></div><div><a href="/2024/09/14/vLLM/" title="vLLM-高效管理内存的LLM推理系统"><img class="cover" src= "/static_img/loading.gif" data-lazy-src="/posts_img/vLLM/6.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-09-14</div><div class="title">vLLM-高效管理内存的LLM推理系统</div></div></a></div></div></div><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="gitalk-container"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src= "/static_img/loading.gif" data-lazy-src="/static_img/me.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Cheung</div><div class="author-info__description">个人博客，主要记录有关看论文、学习计算机科学的笔记</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">6</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">5</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">2</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/Kevin-Zhang-SYSU"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/Kevin-Zhang-SYSU" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="https://blog.csdn.net/zy_sysu?type=blog" target="_blank" title="CSDN"><i class="fa fa-book-open"></i></a><a class="social-icon" href="tencent://AddContact/?fromId=45&amp;fromSubId=1&amp;subcmd=all&amp;uin=2651309292&amp;website=www.oicqzone.com" target="_blank" title="QQ"><i class="fab fa-qq"></i></a><a class="social-icon" href="mailto:2651309292.com" target="_blank" title="Email"><i class="fas fa-envelope-open-text"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">任重道远，毋忘奋斗</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Alpa%E6%A6%82%E5%BF%B5"><span class="toc-number">1.</span> <span class="toc-text">Alpa概念</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Alpa%E7%9A%84Workflow"><span class="toc-number">2.</span> <span class="toc-text">Alpa的Workflow</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BF%90%E7%AE%97%E5%86%85%E5%B9%B6%E8%A1%8C%E6%93%8D%E4%BD%9C%E6%B5%81%EF%BC%88Intra-Operator-Pass%EF%BC%89"><span class="toc-number">2.1.</span> <span class="toc-text">运算内并行操作流（Intra-Operator Pass）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BF%90%E7%AE%97%E9%97%B4%E5%B9%B6%E8%A1%8C%E6%93%8D%E4%BD%9C%E6%B5%81%EF%BC%88Inter-Operator-Pass%EF%BC%89"><span class="toc-number">2.2.</span> <span class="toc-text">运算间并行操作流（Inter-Operator Pass）</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%AF%84%E4%BC%B0"><span class="toc-number">3.</span> <span class="toc-text">评估</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%BB%93%E8%AE%BA"><span class="toc-number">4.</span> <span class="toc-text">结论</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2024/09/19/Alpa/" title="Alpa-自动生成DL模型并行放置策略"><img src= "/static_img/loading.gif" data-lazy-src="/posts_img/Alpa/cover.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Alpa-自动生成DL模型并行放置策略"/></a><div class="content"><a class="title" href="/2024/09/19/Alpa/" title="Alpa-自动生成DL模型并行放置策略">Alpa-自动生成DL模型并行放置策略</a><time datetime="2024-09-18T16:41:49.000Z" title="发表于 2024-09-19 00:41:49">2024-09-19</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/09/14/vLLM/" title="vLLM-高效管理内存的LLM推理系统"><img src= "/static_img/loading.gif" data-lazy-src="/posts_img/vLLM/6.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="vLLM-高效管理内存的LLM推理系统"/></a><div class="content"><a class="title" href="/2024/09/14/vLLM/" title="vLLM-高效管理内存的LLM推理系统">vLLM-高效管理内存的LLM推理系统</a><time datetime="2024-09-14T15:02:45.000Z" title="发表于 2024-09-14 23:02:45">2024-09-14</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/09/14/Orca/" title="Orca-大模型推理系统开山之作"><img src= "/static_img/loading.gif" data-lazy-src="/posts_img/Orca/cover.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Orca-大模型推理系统开山之作"/></a><div class="content"><a class="title" href="/2024/09/14/Orca/" title="Orca-大模型推理系统开山之作">Orca-大模型推理系统开山之作</a><time datetime="2024-09-14T04:24:22.000Z" title="发表于 2024-09-14 12:24:22">2024-09-14</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/09/13/MOE-Intro/" title="MOE基础介绍"><img src= "/static_img/loading.gif" data-lazy-src="/posts_img/MOE-Intro/1.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="MOE基础介绍"/></a><div class="content"><a class="title" href="/2024/09/13/MOE-Intro/" title="MOE基础介绍">MOE基础介绍</a><time datetime="2024-09-13T08:53:07.000Z" title="发表于 2024-09-13 16:53:07">2024-09-13</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/09/12/MOE-Offloading/" title="MOE利用Offload进行高效推理"><img src= "/static_img/loading.gif" data-lazy-src="/posts_img/MOE-Offloading/1.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="MOE利用Offload进行高效推理"/></a><div class="content"><a class="title" href="/2024/09/12/MOE-Offloading/" title="MOE利用Offload进行高效推理">MOE利用Offload进行高效推理</a><time datetime="2024-09-12T15:22:07.000Z" title="发表于 2024-09-12 23:22:07">2024-09-12</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2024 By Cheung</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=4.13.0"></script><script src="/js/main.js?v=4.13.0"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload@17.8.8/dist/lazyload.iife.min.js"></script><div class="js-pjax"><script>(() => {
+  const initGitalk = () => {
+    const gitalk = new Gitalk(Object.assign({
+      clientID: 'Ov23liYwVu9ic2D9PEDf',
+      clientSecret: 'a4ba82ab53b44665bb89718447b5a787223e14ec',
+      repo: 'kevin-zhang-sysu.github.io',
+      owner: 'kevin-zhang-sysu',
+      admin: ['kevin-zhang-sysu'],
+      id: '91dd51f59f2c1db6c84fb9282e876428',
+      updateCountCallback: commentCount
+    },null))
+
+    gitalk.render('gitalk-container')
+  }
+
+  const loadGitalk = async() => {
+    if (typeof Gitalk === 'function') initGitalk()
+    else {
+      await getCSS('https://cdn.jsdelivr.net/npm/gitalk@1.8.0/dist/gitalk.min.css')
+      await getScript('https://cdn.jsdelivr.net/npm/gitalk@1.8.0/dist/gitalk.min.js')
+      initGitalk()
+    }
+  }
+  
+  const commentCount = n => {
+    const isCommentCount = document.querySelector('#post-meta .gitalk-comment-count')
+    if (isCommentCount) {
+      isCommentCount.textContent= n
+    }
+  }
+
+  if ('Gitalk' === 'Gitalk' || !true) {
+    if (true) btf.loadComment(document.getElementById('gitalk-container'), loadGitalk)
+    else loadGitalk()
+  } else {
+    window.loadOtherComment = loadGitalk
+  }
+})()</script></div><script defer="defer" id="ribbon" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/dist/canvas-ribbon.min.js" size="150" alpha="0.6" zIndex="-1" mobile="false" data-click="true"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js?v=4.13.0"></script></div></div></body></html>
