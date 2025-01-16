@@ -2,7 +2,7 @@
 # 标题
 title: {{ title }}
 date: {{ date }}
-author: 无敌小小弋
+author: Cheung
 # 简述
 summary:
 # 使用自定义封面 
