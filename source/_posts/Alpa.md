@@ -7,6 +7,7 @@ cover: posts_img/Alpa/cover.png
 categories: 
   - Paper Report
 tags: 
+  - OSDI 2022
   - LLM
   - DL
   - Train
