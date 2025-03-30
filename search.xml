@@ -4,6 +4,35 @@
   
     
     <entry>
+      <title>EP03-vLLM源码讲解直播笔记-PD分离</title>
+      <link href="/2025/03/30/vLLM-EP03/"/>
+      <url>/2025/03/30/vLLM-EP03/</url>
+      
+        <content type="html"><![CDATA[<h1 id="FIXME-EP03-vLLM-源码讲解直播笔记"><a href="#FIXME-EP03-vLLM-源码讲解直播笔记" class="headerlink" title="[FIXME][EP03] vLLM 源码讲解直播笔记"></a>[FIXME][EP03] vLLM 源码讲解直播笔记</h1><h2 id="EP03-PD分离"><a href="#EP03-PD分离" class="headerlink" title="EP03: PD分离"></a>EP03: PD分离</h2><p>直播回看链接：<a href="https://www.youtube.com/watch?v=ih6fcJnhoJI">https://www.youtube.com/watch?v=ih6fcJnhoJI</a></p><p>特别鸣谢：月球大叔，Cheng Yihua 大佬带来的精彩讲解</p><h3 id="📌-1-上周回顾（分布式通信与并行策略）"><a href="#📌-1-上周回顾（分布式通信与并行策略）" class="headerlink" title="📌 1. 上周回顾（分布式通信与并行策略）"></a>📌 1. 上周回顾（分布式通信与并行策略）</h3><ul><li>TP，all_gather<ul><li>Linear M x N x K -&gt; M x K</li><li>M * N’, N’ * K -&gt; M * K<br>  在MHA中，每个头被均匀地分在不同的worker上，在进入之后的线性层前要做一次all_gather（这里不理解的可以看看-lm张量并行的方法）</li><li>“vllm\model_executor\models\llama.py”  <figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># llama前向传播的代码</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">forward</span>(<span class="params"></span></span><br><span class="line"><span class="params">    self,</span></span><br><span class="line"><span class="params">    positions: torch.Tensor,</span></span><br><span class="line"><span class="params">    hidden_states: torch.Tensor,</span></span><br><span class="line"><span class="params"></span>) -&gt; torch.Tensor:</span><br><span class="line">    qkv, _ = <span class="variable language_">self</span>.qkv_proj(hidden_states)</span><br><span class="line">    q, k, v = qkv.split([<span class="variable language_">self</span>.q_size, <span class="variable language_">self</span>.kv_size, <span class="variable language_">self</span>.kv_size], dim=-<span class="number">1</span>)</span><br><span class="line">    q, k = <span class="variable language_">self</span>.rotary_emb(positions, q, k)</span><br><span class="line">    attn_output = <span class="variable language_">self</span>.attn(q, k, v)</span><br><span class="line">    output, _ = <span class="variable language_">self</span>.o_proj(attn_output)</span><br><span class="line">    <span class="keyword">return</span> output</span><br></pre></td></tr></table></figure></li></ul></li></ul><h3 id="⚡-2-PD分离"><a href="#⚡-2-PD分离" class="headerlink" title="⚡ 2. PD分离"></a>⚡ 2. PD分离</h3><ul><li>什么是PD分离（Prefill和Decode）<ul><li>prefill: 处理输入的prompt，生成KVCache</li><li>decode: 根据KVCache连续自回归生成一个一个的token</li></ul></li><li>为什么要PD分离<ul><li>prefill: attention N tokens QKV，与序列长度n的平方成正比，需要相当多时间</li><li>decode: attention N KV, 1Q，生成新的token，速度较快</li><li>最初的逻辑：prefill优先</li><li>问题：当新的一个request到来时，进行的prefill会使其他正在decode的request停住</li><li>解决方法：<ul><li>PD分离（PD disaggregation）<ul><li>挑战是P，D的数量</li></ul></li><li>分块预填充（chunked prefill），已在vllm v1版本中默认使用<ul><li>挑战是chunked_size的设置，这里有一个prefill和decode中的trade-off</li></ul></li></ul></li></ul></li><li>PD分离的关键问题<ul><li>怎么传输KVCache<ul><li>两种模式：pooling模式，P2P模式</li><li>LMCache都支持上面两种模式，Mooncake(pooling)，NIXL(p2p)</li></ul></li><li>怎么从vllm提取（注入）KVCache<ul><li>connector API<ul><li>在model_runner中被调用，”vllm\worker\model_runner.py”</li><li>在模型forward前：尝试接收KVCache并注入到到vllm的pages memory中</li><li>模型执行</li><li>在模型forward后，将KVCache从pages memory中并将它发送出去<br><img src="/posts_img/vLLM-EP03/1743330247803.png"><ul><li>两个函数的详细设计在”vllm\distributed\kv_transfer\kv_transfer_agent.py”中  <figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 本质上是根据model input计算出KVCache放在page memory中的什么地方</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">recv_kv_caches_and_hidden_states</span>(<span class="params"></span></span><br><span class="line"><span class="params">    self, model_executable: torch.nn.Module,</span></span><br><span class="line"><span class="params">    model_input: <span class="string">&quot;ModelInputForGPUWithSamplingMetadata&quot;</span>,</span></span><br><span class="line"><span class="params">    kv_caches: <span class="type">List</span>[torch.Tensor]</span></span><br><span class="line"><span class="params"></span>) -&gt; <span class="type">Tuple</span>[<span class="type">Union</span>[torch.Tensor, IntermediateTensors], <span class="built_in">bool</span>,</span><br><span class="line">        <span class="string">&quot;ModelInputForGPUWithSamplingMetadata&quot;</span>]:</span><br><span class="line">              </span><br><span class="line">    <span class="keyword">return</span> <span class="variable language_">self</span>.connector.recv_kv_caches_and_hidden_states(</span><br><span class="line">        model_executable, model_input, kv_caches)</span><br></pre></td></tr></table></figure>  这里不懂的可以去看”vllm\distributed\kv_transfer\kv_connector\simple_connector.py”</li></ul></li></ul></li></ul></li><li>什么时候将request从P node传输到D node<ul><li>先P后D（production stack）</li><li>先D后P（D node收到后先检查是否有KVCache，没有的话再转给P node去做，这个思路主要考虑的是TTFT）</li></ul></li></ul></li></ul>]]></content>
+      
+      
+      <categories>
+          
+          <category> Note </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> LLM </tag>
+            
+            <tag> Inference </tag>
+            
+            <tag> vLLM </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>CacheBlend-高效提高KVCache复用性的方法</title>
       <link href="/2025/03/29/CacheBlend/"/>
       <url>/2025/03/29/CacheBlend/</url>
@@ -35,7 +64,7 @@
     
     
     <entry>
-      <title>EP02-vLLM源码讲解直播笔记</title>
+      <title>EP02-vLLM源码讲解直播笔记-分布式通信与并行策略</title>
       <link href="/2025/03/25/vLLM-EP02/"/>
       <url>/2025/03/25/vLLM-EP02/</url>
       
