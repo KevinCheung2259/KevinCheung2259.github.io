@@ -4,6 +4,35 @@
   
     
     <entry>
+      <title>EP04-vLLM源码讲解直播笔记-Speculative Decoding</title>
+      <link href="/2025/04/05/vLLM-EP04/"/>
+      <url>/2025/04/05/vLLM-EP04/</url>
+      
+        <content type="html"><![CDATA[<h1 id="FIXME-EP04-vLLM-源码讲解直播笔记"><a href="#FIXME-EP04-vLLM-源码讲解直播笔记" class="headerlink" title="[FIXME][EP04] vLLM 源码讲解直播笔记"></a>[FIXME][EP04] vLLM 源码讲解直播笔记</h1><h2 id="EP04-Speculative-Decoding"><a href="#EP04-Speculative-Decoding" class="headerlink" title="EP04: Speculative Decoding"></a>EP04: Speculative Decoding</h2><p>直播回看链接：<a href="https://www.youtube.com/watch?v=WF5xaQqtKUE">https://www.youtube.com/watch?v=WF5xaQqtKUE</a></p><p>特别鸣谢：月球大叔，Du Kuntai, Cheng Yihua 大佬带来的精彩讲解</p><h3 id="📌-1-为什么需要-Speculative-decoding（推测解码）"><a href="#📌-1-为什么需要-Speculative-decoding（推测解码）" class="headerlink" title="📌 1. 为什么需要 Speculative decoding（推测解码）"></a>📌 1. 为什么需要 Speculative decoding（推测解码）</h3><ul><li><p>LLM的decode过程是GPU-Memory-Bound (GPU内存受限) 的</p><ul><li>寻找一种方法能够增加计算次数，但不显著增加对GPU内存的访问次数</li></ul></li><li><p>解决方法：在decode生成token的时候 –&gt; 用小模型猜多几个token并验证</p><ul><li>在 token 生成的每1次迭代中<ul><li>猜3个token，接受率为2&#x2F;3</li><li>2个token是猜测正确的，LLM推理每次还会生成1个新的token –&gt; 3 tokens</li></ul></li><li>一次的迭代所需要的时间<ul><li>计算量：(1 + 3)x</li><li>内存量<ul><li>没有 Speculative decoding 时：模型参数（8x2 GB）+ KVCache（n * 100 KB）</li><li>有 Speculative decoding 时：模型参数（8x2 GB）+ KVCache（（n+3） * 100 KB）</li></ul></li><li>一次迭代的时间不变，吞吐量增加3倍</li></ul></li></ul></li><li><p>衡量一个操作是 computation-bound（计算受限型）还是 memory-bound（内存受限型）的指标是 arithmetic intensity（计算强度）：</p><ul><li>定义：FLOPS（每秒浮点运算次数）&#x2F; MIPs（内存指令次数）</li></ul></li><li><p>Speculative decoding虽然是个很好的优化点，但在实际落地的过程中还面临很多工程上的困难</p></li></ul><h3 id="⚡-2-怎么猜测-token"><a href="#⚡-2-怎么猜测-token" class="headerlink" title="⚡ 2. 怎么猜测 token?"></a>⚡ 2. 怎么猜测 token?</h3><ul><li><p>N-gram</p><ul><li><p>构造一个mapping：如果前3个tokens是A, B, C，接下来两个tokens是D, E</p></li><li><p>示例：</p><ul><li>如果前3个tokens是 <code>To be or</code>，接下来两个tokens是 <code>not to</code></li><li>如果前3个tokens是 <code>be or not</code>，接下来两个tokens是 <code>to be</code></li><li>…</li><li>如果前3个tokens是 <code>, this is</code>，接下来两个tokens是 <code>a question</code></li></ul></li><li><p>从请求输入中构建N-gram，使用这个N-gram来猜测tokens：</p><ul><li><p>接下来是莎士比亚的一些名言：</p><p>  …<br>  <code>To be or not to be, this is a question</code><br>  …</p></li></ul><p>  里面最经典的一句名言是什么?</p><ul><li>假设LLM已经生成：<ul><li><code>Sure! We recommend you this quote: &quot;To be or</code></li><li>猜测：接下来的两个tokens是 <code>not to</code></li><li>验证：正确</li><li>输出：<code>Sure! We recommend you this quote: &quot;To be or not to be&quot;</code></li></ul></li></ul></li></ul></li><li><p>Model-based（draft model）</p><ul><li>Parallel guessing（并行猜测）<ul><li>优点：快</li><li>缺点：在猜测第二个token的时候不知道第一个token是什么</li></ul></li><li>Autoregression guessing（自回归猜测）<ul><li>优点：在猜测第二个token的时候知道第一个token</li><li>缺点：慢</li></ul></li></ul></li><li><p>Deployment（尤其是model-based）存在的问题</p><ul><li>小模型需要KVCache，应该怎么放置？</li><li>小模型小，需要不同的并行策略<ul><li>假设小模型不并行，小模型在0号GPU + vLLM强制不同的GPU有一致的GPU内存利用率（同一个并行组内）–&gt; 会造成其他GPU内存的浪费</li></ul></li><li>要为guessed tokens提前allocate KVCache<ul><li>如果allocate KVCache要跨越vLLM的block边界怎么办</li><li>需要discard的token</li></ul></li><li>从 Sampling –&gt; verification 阶段的转变</li><li>最小化 overhead (Ngram)</li><li>怎么确定每一次应该guess多少个tokens</li><li>怎么在不同requests之间区分<ul><li>不同的request：不同的token数量，它们其中的一部分不进行spec decode</li></ul></li></ul></li></ul><h3 id="📍-3-怎么验证-token-的正确性"><a href="#📍-3-怎么验证-token-的正确性" class="headerlink" title="📍 3. 怎么验证 token 的正确性?"></a>📍 3. 怎么验证 token 的正确性?</h3><ul><li><p>Tree verification（树验证）</p><ul><li><code>To be or</code> –&gt; <code>not to</code>, <code>sleep in</code>, <code>go to</code></li><li><code>To be or</code> 有很多种猜法: <code>not to</code>, <code>sleep in</code>, <code>go to</code></li></ul></li><li><p>LLM怎么验证预测的是正确的?</p><ul><li>Deterministic sampling（确定性采样）(spec decode bad case)</li><li>Random sampling（随机性采样），当 guess probability &gt; threshold 就正确</li></ul></li><li><p>示例：</p><ul><li><p>输入：<code>To be or</code> (already-decoded output) <code>not to</code> (guessed token)</p><ul><li><code>To be or not to</code></li><li><code>To -&gt; be</code></li><li><code>be -&gt; or</code></li><li><code>or -&gt; not</code> 我们的猜测 “not” 是正确的</li><li><code>not -&gt; to</code> 我们的猜测 “to” 是正确的</li><li><code>to -&gt; be</code> “be” 是正确的下一个token</li></ul></li><li><p>输入：<code>To be or</code> (already-decoded output) <code>not be</code> (guessed token)</p><ul><li><code>To be or not be</code></li><li><code>To -&gt; be</code></li><li><code>be -&gt; or</code></li><li><code>or -&gt; not</code> 我们的猜测 “not” 是正确的</li><li><code>not -&gt; be</code> 我们的猜测 “be” 是错误的，应该是 “to”<br>  发现有错误的token后，后面的预测会舍弃</li></ul></li></ul></li></ul>]]></content>
+      
+      
+      <categories>
+          
+          <category> Note </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> LLM </tag>
+            
+            <tag> Inference </tag>
+            
+            <tag> vLLM </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>EP03-vLLM源码讲解直播笔记-PD分离</title>
       <link href="/2025/03/30/vLLM-EP03/"/>
       <url>/2025/03/30/vLLM-EP03/</url>
