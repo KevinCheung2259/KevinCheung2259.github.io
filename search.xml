@@ -78,11 +78,11 @@
       
         <tags>
             
+            <tag> EuroSys 2025 </tag>
+            
             <tag> LLM </tag>
             
             <tag> Inference </tag>
-            
-            <tag> EuroSys 2025 </tag>
             
             <tag> KVCache </tag>
             
@@ -140,9 +140,9 @@
             
             <tag> LLM </tag>
             
-            <tag> OSDI 2024 </tag>
-            
             <tag> Inference </tag>
+            
+            <tag> OSDI 2024 </tag>
             
         </tags>
       
@@ -169,9 +169,9 @@
             
             <tag> LLM </tag>
             
-            <tag> OSDI 2024 </tag>
-            
             <tag> Inference </tag>
+            
+            <tag> OSDI 2024 </tag>
             
         </tags>
       
@@ -229,9 +229,9 @@
       
         <tags>
             
-            <tag> OSDI 2022 </tag>
-            
             <tag> LLM </tag>
+            
+            <tag> OSDI 2022 </tag>
             
             <tag> DL </tag>
             
@@ -289,11 +289,11 @@
       
         <tags>
             
-            <tag> OSDI 2022 </tag>
-            
             <tag> LLM </tag>
             
             <tag> Inference </tag>
+            
+            <tag> OSDI 2022 </tag>
             
         </tags>
       
