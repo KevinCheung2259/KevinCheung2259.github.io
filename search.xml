@@ -78,9 +78,9 @@
       
         <tags>
             
-            <tag> LLM </tag>
-            
             <tag> EuroSys 2025 </tag>
+            
+            <tag> LLM </tag>
             
             <tag> Inference </tag>
             
@@ -229,9 +229,9 @@
       
         <tags>
             
-            <tag> OSDI 2022 </tag>
-            
             <tag> LLM </tag>
+            
+            <tag> OSDI 2022 </tag>
             
             <tag> DL </tag>
             
@@ -289,11 +289,11 @@
       
         <tags>
             
-            <tag> OSDI 2022 </tag>
-            
             <tag> LLM </tag>
             
             <tag> Inference </tag>
+            
+            <tag> OSDI 2022 </tag>
             
         </tags>
       
