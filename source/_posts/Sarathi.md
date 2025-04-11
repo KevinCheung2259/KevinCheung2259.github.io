@@ -16,7 +16,7 @@ Sarathi-Serve 是一个高效大型语言模型（LLM）推理调度器，旨在
 
 论文：(OSDI 2024)[Taming Throughput-Latency Tradeoff in LLM Inference with Sarathi-Serve](https://www.usenix.org/system/files/osdi24-agrawal.pdf)
 
-代码：https://www.usenix.org/system/files/osdi24-agrawal.pdf
+代码：[microsoft/sarathi-serve: A low-latency & high-throughput serving engine for LLMs](https://github.com/microsoft/sarathi-serve)
 
 该文章参考自：https://zhuanlan.zhihu.com/p/12679786211
 
@@ -64,7 +64,7 @@ LLM推理分为两个阶段：
 |:------------------------------:|:------------------------------:|
 
   在上图（左）中，用（计算量/访存量）衡量两个阶段的计算强度，Decode处于访存受限区域，Prifill处于计算受限区域，最理想的是平衡点是操作的算术强度与设备的FLOPS-to-Bandwidth比率相匹配。
-  
+
   右图显示了LLaMA2-70B中**线性层**计算在一次迭代中的总执行时间随token数量的变化。在开始时，当批次处于受内存限制的状态时，执行时间仅略有增加，但随后随着批次变为受计算限制的状态，执行时间呈线性增长。
 
 - 吞吐量与延迟的权衡。
@@ -84,7 +84,7 @@ LLM推理分为两个阶段：
   1. 由于连续两个微批次中prefill令牌的数量不同而产生；
   2. 由于prefill和decode阶段的计算时间不同而产生；
   3. 由于微批次之间decode计算时间的差异而产生，因为注意力成本取决于累积的上下文长度（KV缓存的大小），并在不同请求之间变化。
-   
+  
   总的来说，是由于微批之间的计算不均匀导致，本质上主要还是因为无法完美耦合prefill和decode两个计算、调度特性的不同的阶段。
 
 # 解决方案
@@ -105,7 +105,7 @@ Sarathi-Serve首先根据用户指定的服务级别目标（SLO）计算每批�
 1. 在每个调度迭代中，首先将所有正在decode阶段的请求放入批次中（第6-8行）
 2. 对于未完成预填充的请求，分块加入（第9-12行）
 3. 只有在所有正在运行的请求都被容纳后，才接受新请求（第13-20行）
-  
+
 注意：在向批次添加预填充请求时，要计算在该批次的剩余token预算中可容纳的最大块大小（第11、15行）
 
 通过限制每次迭代的计算负载，无停顿批处理确保解码不会因为并行的预填充块而经历生成停顿。
