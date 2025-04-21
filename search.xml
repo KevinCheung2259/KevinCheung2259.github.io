@@ -4,6 +4,35 @@
   
     
     <entry>
+      <title>EP06-vLLM源码讲解直播笔记-vLLM v1 仙人指路</title>
+      <link href="/2025/04/21/vLLM-EP06/"/>
+      <url>/2025/04/21/vLLM-EP06/</url>
+      
+        <content type="html"><![CDATA[<h1 id="FIXME-EP06-vLLM-源码讲解直播笔记"><a href="#FIXME-EP06-vLLM-源码讲解直播笔记" class="headerlink" title="[FIXME][EP06] vLLM 源码讲解直播笔记"></a>[FIXME][EP06] vLLM 源码讲解直播笔记</h1><h2 id="EP06-vLLM-v1-仙人指路"><a href="#EP06-vLLM-v1-仙人指路" class="headerlink" title="EP06: vLLM v1 仙人指路"></a>EP06: vLLM v1 仙人指路</h2><p>直播回看链接：<a href="https://www.youtube.com/watch?v=6AcgEPmpHIc">https://www.youtube.com/watch?v=6AcgEPmpHIc</a></p><p>特别鸣谢：组织者@月球大叔, 主讲人@Du Kuntai, 飞行嘉宾@YM</p><p>vLLM官方博客：<a href="https://blog.vllm.ai/2025/01/27/v1-alpha-release.html">https://blog.vllm.ai/2025/01/27/v1-alpha-release.html</a></p><h3 id="💥-1-Why-v1-Motivation"><a href="#💥-1-Why-v1-Motivation" class="headerlink" title="💥 1. Why v1 ? (Motivation)"></a>💥 1. Why v1 ? (Motivation)</h3><ul><li><p>vLLM v0 运行起来有点慢 (CPU overhead)</p></li><li><p>vLLM v0 的代码可读性和可二次开发的能力较差</p><ul><li>比如v0的Scheduler代码有2k行，改进后的v1代码只有800行</li><li>代码改动牵一发而动全身</li></ul></li><li><p>如何推进代码重构?</p><ul><li>YM: 在稳定之后完成切换</li><li>开发完成后切换的问题：不切实际，新功能 &amp; 新模型的不断涌现</li><li>vLLM 最重要的特性: 对新模型的支持!!!<ul><li>易用</li><li>性能</li><li>day0 support(在新模型刚发布就适配) –&gt; tech debt(技术债，<br>  由于着急为新功能提供支持而导致工程上的不优雅，可能会影响后续新功能的支持)</li></ul></li></ul></li><li><p>vLLM重构代码的几个阶段</p><ul><li>Stage 1: v1 的开发</li><li>Stage 2: v0 &amp; v1 共存</li><li>Stage 3: 默认开启 v1 (现在)</li><li>Stage 4: v1 比 v0 具有更多可支持的功能</li><li>Stage 5: 移除 v0 的代码</li></ul></li><li><p>为什么Pytorch赢了Tensorflow? 这也是vLLM需要重构的原因</p><ul><li>Tensorflow曾经说过：我们有更多的功能，更好的性能和更多的硬件支持</li><li>原因：研究员更喜欢pytorch，然后他们毕业了…</li><li>vLLM v0 对研究员们不够友好</li></ul></li></ul><h3 id="📌-2-Scheduler"><a href="#📌-2-Scheduler" class="headerlink" title="📌 2. Scheduler"></a>📌 2. Scheduler</h3><p>代码：<code>vllm/v1/core/sched/scheduler.py</code></p><ul><li>调度：统一不同方法下调度tokens的逻辑<ul><li>比如一个长度为500 tokens的请求<ul><li>Prefill: {r: 500}</li><li>Decode: {r: 1}</li><li>Chunk prefill: 256, {r: 256}, {r: 244}</li><li>Prefix caching: r 命中了200个前缀token: {r: 300}</li></ul></li><li>Speculative decoding: 每个请求5个token {r: 5}</li><li>Multi-modality: r: 100个文本tokens, 500个图像tokens, 100个文本tokens:<ul><li>{r: 100}, {r: 500}, {r: 100}</li></ul></li></ul></li><li>简化调度逻辑，默认使用chunk prefill，不严格区分prefill和decode</li><li>同步调度</li></ul><h3 id="🔔-3-General-architecture"><a href="#🔔-3-General-architecture" class="headerlink" title="🔔 3. General architecture"></a>🔔 3. General architecture</h3><ul><li>前后端解耦，Scheduler, API Server, (de) tokenizer分在不同的进程上<br>  <img src="/posts_img/vLLM-EP06/v1_server_architecture.png?60">  <!-- <img src="posts_img/vLLM-EP06/v1_server_architecture.png" alt="v1 server architecture" width="600"> --></li><li>Scheduler &amp; Worker 在不同的进程中<ul><li>Scheduler, Rank 0 worker在同一个process中并存（在之前的v0版本上）<br>  <img src="/posts_img/vLLM-EP06/v1_tp_architecture.png?50">  <!-- <img src="posts_img/vLLM-EP06/v1_tp_architecture.png" alt="v1 tp architecture" width="500"> --></li></ul></li></ul><p>要获取最新的vLLM更新的干货，可以查看github仓库里meetup的slices</p><ul><li>例如：<a href="https://docs.google.com/presentation/d/19cp6Qu8u48ihB91A064XfaXruNYiBOUKrBxAmDOllOo/edit?usp=sharing">https://docs.google.com/presentation/d/19cp6Qu8u48ihB91A064XfaXruNYiBOUKrBxAmDOllOo/edit?usp=sharing</a></li></ul><h3 id="⚡-3-Worker"><a href="#⚡-3-Worker" class="headerlink" title="⚡ 3. Worker"></a>⚡ 3. Worker</h3><ul><li>Persistent batching<ul><li>对于从CPU到GPU之间的数据传输，我们只需要传上一个batch的tensor增量即可</li><li>这个技术不新</li><li>相关代码位于: <code>vllm/v1/worker/gpu_input_batch.py</code>, <code>vllm/v1/worker/gpu_worker.py</code></li></ul></li><li>Piecewise cudagraph<ul><li>Cudagraph<ul><li>记录了一系列CUDA kernel operation然后在之后重放</li><li>CPU 启动 CUDA kernel 是很慢的, 但是运行一个CUDA kernel是非常快的</li><li>CUDAGraph: 对于一系列的CUDA kernel, CPU只需要启动一次<ul><li>不会记录CPU operation, 丧失了灵活性</li></ul></li></ul></li><li>CUDAGraph的缺点： 丧失了灵活性</li><li>Observation: 灵活性需求通常发生在attention layer而不在MLP layer</li><li>解决方法：piece-wise cudagraph, 只在MLP层记录cuda graph，attention的部分使用pytorch eager mode</li></ul></li></ul><h3 id="💡-4-Attention-kernel"><a href="#💡-4-Attention-kernel" class="headerlink" title="💡 4. Attention kernel"></a>💡 4. Attention kernel</h3><ul><li>简化了设置<ul><li>Key observation: 对于每个attention kernel, 最基本的信息来源于大概6-7个tensors</li></ul></li><li>Cascade inference (级联推理)<ul><li>假设有这样的一个场景<ul><li>System prompt: 10,000 tokens</li><li>10 user chat, each chat 100 tokens</li></ul></li><li>常规的attention需要读取的内存大小<ul><li>（10，000 + 100） * 10 tokens</li></ul></li><li>Cascade inference<ul><li>10,000 + 100 * 10 tokens</li></ul></li><li>vLLM: 使用performance model去决定什么时候使用cascade inference<ul><li><code>vllm/v1/attention/backends/flash_attn.py: use_cascade attention</code></li></ul></li></ul></li></ul><h3 id="🔎-6-Multi-model"><a href="#🔎-6-Multi-model" class="headerlink" title="🔎 6. Multi-model"></a>🔎 6. Multi-model</h3><ul><li>Embedding as the KV cache reference</li><li>KV cache 管理（incoming）<ul><li>Hybrid memory allocator…</li></ul></li><li>这部分内容太多，值得开个专题来讲讲，下次见！</li></ul>]]></content>
+      
+      
+      <categories>
+          
+          <category> Note </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> LLM </tag>
+            
+            <tag> Inference </tag>
+            
+            <tag> vLLM </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>EP05-vLLM源码讲解直播笔记-Prefix Caching</title>
       <link href="/2025/04/16/vLLM-EP05/"/>
       <url>/2025/04/16/vLLM-EP05/</url>
