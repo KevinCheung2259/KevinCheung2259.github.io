@@ -1,0 +1,490 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>EP07-MoE+闲谈学术品味 | Cheung's Blog</title><meta name="author" content="Cheung"><meta name="copyright" content="Cheung"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="[FIXME] [EP07] 聊聊MoE+闲谈学术品味直播回看链接：https:&#x2F;&#x2F;www.youtube.com&#x2F;watch?v&#x3D;mHUBwzlsWjg 特别鸣谢：组织者@月球大叔, 主讲人@Du Kuntai, @Cheng Yihua 飞行嘉宾是Google Deepmind高级研究科学家、OpenMoE的作者Xue Fuzhao   主要方向：Gemini Pretraining、Mode">
+<meta property="og:type" content="article">
+<meta property="og:title" content="EP07-MoE+闲谈学术品味">
+<meta property="og:url" content="http://kevincheung2259.github.io/2025/05/02/vLLM-EP07/index.html">
+<meta property="og:site_name" content="Cheung&#39;s Blog">
+<meta property="og:description" content="[FIXME] [EP07] 聊聊MoE+闲谈学术品味直播回看链接：https:&#x2F;&#x2F;www.youtube.com&#x2F;watch?v&#x3D;mHUBwzlsWjg 特别鸣谢：组织者@月球大叔, 主讲人@Du Kuntai, @Cheng Yihua 飞行嘉宾是Google Deepmind高级研究科学家、OpenMoE的作者Xue Fuzhao   主要方向：Gemini Pretraining、Mode">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://kevincheung2259.github.io/posts_img/vLLM/cover.png">
+<meta property="article:published_time" content="2025-05-02T15:35:34.000Z">
+<meta property="article:modified_time" content="2025-05-02T16:00:23.623Z">
+<meta property="article:author" content="Cheung">
+<meta property="article:tag" content="LLM">
+<meta property="article:tag" content="Inference">
+<meta property="article:tag" content="vLLM">
+<meta property="article:tag" content="MoE">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://kevincheung2259.github.io/posts_img/vLLM/cover.png"><link rel="shortcut icon" href="/static_img/me.jpg"><link rel="canonical" href="http://kevincheung2259.github.io/2025/05/02/vLLM-EP07/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//www.google-analytics.com" crossorigin=""/><link rel="preconnect" href="//hm.baidu.com"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=4.13.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?d65eed546e2912533944787b69fa83eb";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script><script async="async" src="https://www.googletagmanager.com/gtag/js?id=G-RYGQ5K1B81"></script><script>window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-RYGQ5K1B81');
+</script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"找不到您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":false,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.11.1/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyload: true,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'EP07-MoE+闲谈学术品味',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2025-05-03 00:00:23'
+}</script><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+        if (t === 'dark') activateDarkMode()
+        else if (t === 'light') activateLightMode()
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><meta name="generator" content="Hexo 7.3.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src= "/static_img/loading.gif" data-lazy-src="/static_img/me.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">16</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">14</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">3</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fa fa-graduation-cap"></i><span> 博文</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/categories/"><i class="fa-fw fa fa-archive"></i><span> 分类</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/archives/"><i class="fa-fw fa fa-folder-open"></i><span> 归档</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/links/"><i class="fa-fw fa fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/comment/"><i class="fa-fw fa fa-paper-plane"></i><span> 留言板</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于笔者</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('/posts_img/vLLM/cover.png')"><nav id="nav"><span id="blog-info"><a href="/" title="Cheung's Blog"><span class="site-name">Cheung's Blog</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fa fa-graduation-cap"></i><span> 博文</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/categories/"><i class="fa-fw fa fa-archive"></i><span> 分类</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/archives/"><i class="fa-fw fa fa-folder-open"></i><span> 归档</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/links/"><i class="fa-fw fa fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/comment/"><i class="fa-fw fa fa-paper-plane"></i><span> 留言板</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于笔者</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">EP07-MoE+闲谈学术品味</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2025-05-02T15:35:34.000Z" title="发表于 2025-05-02 23:35:34">2025-05-02</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-05-02T16:00:23.623Z" title="更新于 2025-05-03 00:00:23">2025-05-03</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Note/">Note</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">2.8k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>10分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="EP07-MoE+闲谈学术品味"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="FIXME-EP07-聊聊MoE-闲谈学术品味"><a href="#FIXME-EP07-聊聊MoE-闲谈学术品味" class="headerlink" title="[FIXME] [EP07] 聊聊MoE+闲谈学术品味"></a>[FIXME] [EP07] 聊聊MoE+闲谈学术品味</h1><p>直播回看链接：<a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=mHUBwzlsWjg">https://www.youtube.com/watch?v=mHUBwzlsWjg</a></p>
+<p>特别鸣谢：组织者@月球大叔, 主讲人@Du Kuntai, @Cheng Yihua</p>
+<p>飞行嘉宾是Google Deepmind高级研究科学家、OpenMoE的作者Xue Fuzhao </p>
+<ul>
+<li>主要方向：Gemini Pretraining、Model Architecture和Multi-Modal LLM</li>
+<li>主要工作：OpenMoE, Token-Crisis, AdaTape, Sequence Parallelism和LongVILA.</li>
+</ul>
+<h2 id="💥-开场"><a href="#💥-开场" class="headerlink" title="💥 开场"></a>💥 开场</h2><p><strong>Fuzhao: 我的PhD七个收获</strong></p>
+<ol>
+<li><strong>工程能力</strong>是研究的基础。</li>
+<li>与有才华的人合作对提升<strong>研究品味</strong>非常有帮助。</li>
+<li>目标是<strong>一个简洁且有洞察力的45分钟演讲</strong>，而不是整个PhD期间的长篇论文列表。</li>
+<li><strong>专注于少量关键论文</strong>并深入理解，而不是快速浏览大量论文。</li>
+<li>当接触一个新主题时，<strong>沿着时间线阅读论文</strong>，以研究趋势的演变。<ul>
+<li>“监督式练习”：基于当前论文，我接下来会做什么？</li>
+</ul>
+</li>
+<li><strong>换位思考</strong>是提升写作和演讲的高效方法。</li>
+<li><strong>PhD学位是有帮助的，但不是从事LLM研究的必要条件</strong>。</li>
+</ol>
+<h2 id="OpenMoE"><a href="#OpenMoE" class="headerlink" title="OpenMoE"></a>OpenMoE</h2><h3 id="The-original-MoE"><a href="#The-original-MoE" class="headerlink" title="The original MoE"></a>The original MoE</h3><p>常见误解：MoE是许多<em><strong>模型</strong></em>的混合。</p>
+<p>实际上，它是一个单一模型，在FFN层中有多个<em><strong>专家</strong></em>。</p>
+<p><strong>Router</strong>决定激活哪些专家。</p>
+<p>Router是一个简单的<strong>线性层</strong>，通过点积运算。</p>
+<p>图示来自<em>Switch Transformers (2022)</em></p>
+<p><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2101.03961">https://arxiv.org/abs/2101.03961</a></p>
+<p><img src= "/static_img/loading.gif" data-lazy-src="/posts_img/vLLM-EP07/image.png"></p>
+<h3 id="History-of-MoEs"><a href="#History-of-MoEs" class="headerlink" title="History of MoEs"></a>History of MoEs</h3><h4 id="2017-LSTM-MoE"><a href="#2017-LSTM-MoE" class="headerlink" title="2017: LSTM + MoE"></a>2017: LSTM + MoE</h4><p>Gating network</p>
+<ul>
+<li>Naive hard selection不可微分。</li>
+<li>这项工作使用了一些技巧使其可微分。</li>
+</ul>
+<p>![](posts_img&#x2F;vLLM-EP07&#x2F;image 1.png)</p>
+<h4 id="2021-Gshard-from-Google-MLSys"><a href="#2021-Gshard-from-Google-MLSys" class="headerlink" title="2021: Gshard from Google (MLSys)"></a>2021: Gshard from Google (MLSys)</h4><p>MoE：增加参数数量而不增加FLOPs → 更稀疏 → 更节省内存。</p>
+<p>Expert parallelism：不同的专家分布在不同的GPU上。</p>
+<p>引入了额外的all-to-all通信开销。</p>
+<p>![](posts_img&#x2F;vLLM-EP07&#x2F;image 2.png)</p>
+<h4 id="2021-Switch-Transformer"><a href="#2021-Switch-Transformer" class="headerlink" title="2021: Switch Transformer"></a>2021: Switch Transformer</h4><p>第一个开源的MoE，非常重要的工作。</p>
+<p>基于T5构建。由于T5太大，使用它的人不多。</p>
+<p>![](posts_img&#x2F;vLLM-EP07&#x2F;image 3.png)</p>
+<p>后续工作：GLaM, ST-MoE…</p>
+<p>Awesome-mix-of-experts: 10篇必读论文 <a target="_blank" rel="noopener" href="https://github.com/XueFuzhao/awesome-mixture-of-experts">https://github.com/XueFuzhao/awesome-mixture-of-experts</a></p>
+<p>Google当时做了很多相关工作。</p>
+<h4 id="2023-OpenMoE-→-一系列开源MoE模型"><a href="#2023-OpenMoE-→-一系列开源MoE模型" class="headerlink" title="2023: OpenMoE → 一系列开源MoE模型"></a>2023: OpenMoE → 一系列开源MoE模型</h4><p>GPT4使用了MoE</p>
+<p><strong>Fuzhao当时为什么选择MoE</strong>：在扩展规模时，MoE依然表现良好</p>
+<p>在TPU上训练了一年。</p>
+<p>现在性能一般。主要贡献是<strong>可视化带来的insights</strong>。</p>
+<p>Kuntai：MoE会越来越流行，因为它性价比高。vLLM正在尝试更高效地支持MoE</p>
+<h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><ul>
+<li>2017: LSTM + MoE</li>
+<li>2021: Gshard (MoE MLSys)</li>
+<li>2021: Switch Transformer (MoE)</li>
+<li>GLaM, ST-MoE</li>
+<li>2023: OpenMoE, Mixtral</li>
+<li>2024: DeepSeek-MoE, OLMoE <a target="_blank" rel="noopener" href="https://github.com/allenai/OLMoE?tab=readme-ov-file">https://github.com/allenai/OLMoE?tab=readme-ov-file</a></li>
+<li>2025: LLaMA-4</li>
+</ul>
+<p>MoE曾经很难训练</p>
+<h2 id="📌-Formal-definiton"><a href="#📌-Formal-definiton" class="headerlink" title="📌 Formal definiton"></a>📌 Formal definiton</h2><p>给定E个专家：</p>
+<p>$$<br>MoE(x) &#x3D; \sum_{i&#x3D;1}^{E} g(x)_i e_i(x)<br>$$</p>
+<p>其中<code>e_i()</code>是第i个专家的非线性变换，<code>g()_i</code>是可训练的router <code>g()</code>输出的第i个元素。</p>
+<p>通常，<code>e()</code>和<code>g()</code>都由神经网络参数化。</p>
+<p>g()扩展实验：没有明显收益</p>
+<h3 id="TopK-selection"><a href="#TopK-selection" class="headerlink" title="TopK selection"></a>TopK selection</h3><p>为了保证<code>g()</code>的稀疏路由，使用<code>TopK()</code>选择排名靠前的专家。</p>
+<p>公式如下：</p>
+<p>$$<br> \text{g(x) &#x3D;TopK(softmax(f(x) + ε))}<br>$$</p>
+<p>其中<code>f()</code>是路由线性层，<code>ε</code>是用于探索专家路由的高斯噪声。</p>
+<h3 id="Balanced-loading"><a href="#Balanced-loading" class="headerlink" title="Balanced loading"></a>Balanced loading</h3><p>EP：如果4个专家中有一个很热门，3个GPU经常空闲 → 3个E的权重被浪费</p>
+<p>不均衡的token分配会降低MoE模型的吞吐量和性能。</p>
+<p>为防止这种情况，需要避免两个问题：</p>
+<ol>
+<li><strong>太多token</strong>被<strong>发送</strong>到某一个专家</li>
+<li><strong>太少token</strong>被<strong>分配</strong>给某一个专家</li>
+</ol>
+<h4 id="1-太多token被发送"><a href="#1-太多token被发送" class="headerlink" title="1. 太多token被发送"></a><strong>1. 太多token被发送</strong></h4><p>为了解决第一个问题，定义了<strong>buffer capacity B</strong>：B &#x3D; CKNL</p>
+<p>其中：</p>
+<ul>
+<li>C: capacity ratio</li>
+<li>K: 每个token选择的专家数</li>
+<li>N: 每个设备上的batch size</li>
+<li>L: 序列长度</li>
+</ul>
+<p>对于每个专家，无论分配多少token，<strong>最多只保留B个token</strong>。</p>
+<h4 id="2-太少token被分配"><a href="#2-太少token被分配" class="headerlink" title="2. 太少token被分配"></a>2. <strong>太少token被分配</strong></h4><p>为了解决第二个问题，在训练时在总损失中加入了如下<strong>辅助损失</strong>：</p>
+<p>$$<br>l_{balance} &#x3D; E \cdot \sum_{i&#x3D;1}^{E} m_i \cdot P_i <br>$$</p>
+<ul>
+<li><code>m_i</code>：分配给专家<code>i</code>的token比例</li>
+<li><code>P_i</code>：router内部第i个专家的softmax输出（即概率值）。</li>
+</ul>
+<p>$$<br>m_i &#x3D; \frac{1}{L} \sum_{j&#x3D;1}^{L} h(x_j)_i <br>$$</p>
+<ul>
+<li><code>L</code>：token总数（batch size × 序列长度）。</li>
+<li><code>h(x_j)_i</code>：对于第j个token，表示是否分配给专家（是为1，否则为0）。</li>
+</ul>
+<p>所以<code>m_i</code>是：</p>
+<ul>
+<li>统计有多少token被路由到专家iii，</li>
+<li>然后除以token总数，得到<strong>专家iii的负载比例</strong>。</li>
+</ul>
+<p><code>m</code>是不可微的。因此，定义可微的<code>P_i</code>：</p>
+<p>$$<br>P_i &#x3D; \text{softmax}(f(x) + \epsilon)_i <br>$$</p>
+<p>当我们最小化<code>l_&#123;balance&#125;</code>时，可以看到<code>m</code>和<code>P</code>都会趋于均匀分布。</p>
+<p>注意：<code>P_i</code>是router中Top K的<strong>输入</strong></p>
+<p>$$<br>g(x) &#x3D; \text{TopK}(\text{softmax}(f(x) + \epsilon)) <br>$$</p>
+<p>当时，MoE可以节省50% FLOPs。现在可能会更好。</p>
+<h3 id="Training-on-MoE-multi-turn-is-worse"><a href="#Training-on-MoE-multi-turn-is-worse" class="headerlink" title="Training on MoE: multi-turn is worse?"></a>Training on MoE: multi-turn is worse?</h3><p>MTBench：早期的多轮对话评测基准。</p>
+<p>多轮结果比单轮差。类似地，few shot比zero shot差。原因后面会讨论。</p>
+<p><img src= "/static_img/loading.gif" data-lazy-src="/posts_img/vLLM-EP07/477dc85a-efe2-4d24-8b70-814690bf575c.png"></p>
+<h3 id="MoE会专门化吗？"><a href="#MoE会专门化吗？" class="headerlink" title="MoE会专门化吗？"></a>MoE会专门化吗？</h3><p>领域层面？没有专门化。token被均匀分配到不同E。</p>
+<p><img src= "/static_img/loading.gif" data-lazy-src="/posts_img/vLLM-EP07/7675cc3f-05d4-4b90-a639-c15eeaf47fd3.png"></p>
+<p>编程语言？没有</p>
+<p>自然语言？有一定程度。相似语言会分到相似E。</p>
+<p><img src= "/static_img/loading.gif" data-lazy-src="/posts_img/vLLM-EP07/d9ed9a79-1559-45f4-90b0-dc4e37d02785.png"></p>
+<p><img src= "/static_img/loading.gif" data-lazy-src="/posts_img/vLLM-EP07/738e10de-667a-4dfd-9aa7-2c19efb355bb.png"></p>
+<p>Yihua：为什么有些E擅长很多任务。</p>
+<p>Fuzhao：一种可能是E处理system prompt。</p>
+<p>MoE只是懒得按位置分配吗？没有明显规律。</p>
+<p><img src= "/static_img/loading.gif" data-lazy-src="/posts_img/vLLM-EP07/a93c893d-f2ce-4f0f-8bdc-1e7248ba291f.png"></p>
+<h3 id="Context-independent-specialization"><a href="#Context-independent-specialization" class="headerlink" title="Context-independent specialization"></a><strong>Context-independent specialization</strong></h3><p>Token ID专门化？<strong>是的</strong></p>
+<p><img src= "/static_img/loading.gif" data-lazy-src="/posts_img/vLLM-EP07/7458f9f0-0d4d-42bc-9cb1-3d5caf45cb1f.png"></p>
+<p>Router只是线性层。没有学到高层语义，只是按token ID路由。</p>
+<p>Deepseek V2也是这样。Deepseek V3还没测。</p>
+<p>观众：Deepseek R1没有token专门化</p>
+<h4 id="专家会聚类相似token吗？"><a href="#专家会聚类相似token吗？" class="headerlink" title="专家会聚类相似token吗？"></a>专家会聚类相似token吗？</h4><p>会</p>
+<p><img src= "/static_img/loading.gif" data-lazy-src="/posts_img/vLLM-EP07/3e85675f-7e39-4485-8dbc-526cdb514663.png"></p>
+<p>E21喜欢编程token</p>
+<p>E31喜欢情态动词</p>
+<p>E0和E1喜欢’\n’</p>
+<h3 id="为什么Context-independent？早期路由学习"><a href="#为什么Context-independent？早期路由学习" class="headerlink" title="为什么Context-independent？早期路由学习"></a>为什么<strong>Context-independent？早期路由学习</strong></h3><p><img src= "/static_img/loading.gif" data-lazy-src="/posts_img/vLLM-EP07/0c5ab82f-7c10-485e-9321-753b14b4bc1d.png"></p>
+<p>路由决策在高层语义还没学好时就已经学会了。</p>
+<p><strong>QA: MoE在消费级GPU上</strong></p>
+<ul>
+<li>E经常在CPU内存&#x2F;磁盘中换进换出</li>
+<li>如何减少I&#x2F;O？</li>
+<li>基于相关性预取E。例如，如果Ex在第i层被激活，那么Ey很可能在第i+1层被激活。</li>
+</ul>
+<p>任务专门化其实就是token专门化：</p>
+<ul>
+<li>编程专家：喜欢编程token</li>
+<li>数学专家：喜欢数字token</li>
+<li>…</li>
+</ul>
+<p><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2412.14219">https://arxiv.org/abs/2412.14219</a></p>
+<h3 id="末端token丢失"><a href="#末端token丢失" class="headerlink" title="末端token丢失"></a>末端token丢失</h3><p>![](posts_img&#x2F;vLLM-EP07&#x2F;image 4.png)</p>
+<p>为什么多轮更差？为什么few shot更差？看起来context越长越差。</p>
+<p>回忆一下capacity ratio：如果E收到太多token，会丢弃<strong>后面的</strong>token。</p>
+<p>即使有负载均衡，分配到某个E的token还是可能太多。</p>
+<ul>
+<li>推理分布和训练分布可能差异很大。例如，短时间内可能有大量编程任务。</li>
+</ul>
+<p>context越长，负载越不均衡。</p>
+<p>SFT阶段能解决吗？尝试过但失败了。</p>
+<p>Kuntai：P&#x2F;D解耦能解决吗？</p>
+<p>Yihua：chunked prefill能解决吗？</p>
+<p>Fuzhao：最近Megablock工作没有C</p>
+<h3 id="近期进展：Megablock"><a href="#近期进展：Megablock" class="headerlink" title="近期进展：Megablock"></a>近期进展：Megablock</h3><p>最近的MoE去掉了capacity ratio C → dropless-MoE (dMoE) → 负载不均衡</p>
+<ul>
+<li>→ 降低EP。例如每个GPU 8或16个专家</li>
+<li>→ MegaBlocks：将稠密批量matmul转为稀疏matmul</li>
+</ul>
+<p><a target="_blank" rel="noopener" href="https://github.com/databricks/megablocks">https://github.com/databricks/megablocks</a></p>
+<p><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2211.15841">https://arxiv.org/abs/2211.15841</a></p>
+<p>![](posts_img&#x2F;vLLM-EP07&#x2F;image 5.png)</p>
+<p>![](posts_img&#x2F;vLLM-EP07&#x2F;image 6.png)</p>
+<p>![](posts_img&#x2F;vLLM-EP07&#x2F;image 7.png)</p>
+<blockquote>
+<p>图3. <strong>MoE层中的专家计算</strong>。以num expert&#x3D;3为例。</p>
+<p>(A) 目前最先进的MoE实现使用批量矩阵乘法并行计算所有专家。这要求所有专家分配相同数量的token且形状一致。</p>
+<p>(B) 专家计算也可以用块对角矩阵乘法（块大小相同）来表示。</p>
+<p>(C) 为了放宽这些约束，可以构造由许多小块组成的变尺寸块对角矩阵。<strong>可以用block-sparse matrix multiplication高效计算。</strong></p>
+</blockquote>
+<p>有很多方法可以高效实现<strong>block-sparse matmul</strong>。</p>
+<p>新趋势：attention-MoE解耦</p>
+<h3 id="DeepSeek-MoE"><a href="#DeepSeek-MoE" class="headerlink" title="DeepSeek MoE"></a>DeepSeek MoE</h3><ul>
+<li>更多E，每个E更小：路由更平滑</li>
+<li>激活更多E</li>
+<li>Shared E：始终开启<ul>
+<li>有EP时，至少有一个GPU不会空闲（可以做shared E计算）</li>
+</ul>
+</li>
+</ul>
+<p><img src= "/static_img/loading.gif" data-lazy-src="/posts_img/vLLM-EP07/7bd7ae81-9c9e-4609-84ab-c2eb737d5eb3.png"></p>
+<p><strong>KTransformers</strong>：attention在GPU上，MoE在CPU上</p>
+<p><a target="_blank" rel="noopener" href="https://kvcache-ai.github.io/ktransformers/en/deepseek-v2-injection.html">https://kvcache-ai.github.io/ktransformers/en/deepseek-v2-injection.html</a></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/kvcache-ai/ktransformers">https://github.com/kvcache-ai/ktransformers</a></p>
+<h3 id="更多思考"><a href="#更多思考" class="headerlink" title="更多思考"></a>更多思考</h3><ul>
+<li>MoE训练很棘手（负载均衡、训练稳定性）<ul>
+<li>例子：UL2在OpenMoE 34B参数时变得不稳定，只能用50B token训练OpenMoE 34B</li>
+</ul>
+</li>
+<li>MoE更需要大量数据<ul>
+<li>MoE模型在有限或重复数据上容易过拟合</li>
+</ul>
+</li>
+<li>MoE对数据多样性更敏感</li>
+</ul>
+<p><strong>DeepSeek</strong></p>
+<ul>
+<li>专家级无损路由</li>
+<li>设备级：每个GPU 4个E，GPU间负载均衡，同一GPU内E可以不均衡</li>
+</ul>
+<p>![](posts_img&#x2F;vLLM-EP07&#x2F;image 8.png)</p>
+<p><img src= "/static_img/loading.gif" data-lazy-src="/posts_img/vLLM-EP07/215f11cb-ea62-404b-807f-1077fcc2accc.png"></p>
+<p><strong>Dense upscaling</strong>：稠密模型已学到语义，路由更均衡</p>
+<p><strong>Token-choice vs expert-choice MoE</strong></p>
+<p>![](posts_img&#x2F;vLLM-EP07&#x2F;image 9.png)</p>
+<ul>
+<li>Token-choice：每个token选择E</li>
+<li>Expert-choice：所有token进来，每个E选择要接受哪些token<ul>
+<li>存在context泄漏问题。不能用于decoder<ul>
+<li>除非batch size非常大，只在batch维度选择</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="当时的Takeaways"><a href="#当时的Takeaways" class="headerlink" title="当时的Takeaways"></a>当时的Takeaways</h3><ul>
+<li><strong>优点</strong><ul>
+<li>MoE能节省约50%训练成本（现在甚至更多）</li>
+<li>MoE推理成本节省不到50%</li>
+</ul>
+</li>
+<li><strong>缺点</strong><ul>
+<li>MoE训练棘手（负载均衡、训练稳定性）</li>
+<li>MoE更需要大量数据</li>
+<li>MoE对数据多样性更敏感</li>
+<li>MoE通信开销大（EP，不太友好硬件）</li>
+</ul>
+</li>
+</ul>
+<p>什么时候用MoE？</p>
+<ul>
+<li>知识很重要 → 用更多参数存储知识</li>
+<li>有大量并发请求 → 可以高效利用更多专家</li>
+<li>有足够数据时</li>
+<li>有更多时间debug时（至少目前阶段）😊</li>
+</ul>
+<h2 id="🔔-vLLM-MoE支持"><a href="#🔔-vLLM-MoE支持" class="headerlink" title="🔔 vLLM MoE支持"></a>🔔 vLLM MoE支持</h2><p>核心：处理EP</p>
+<p>Route → MoE → Route back</p>
+<p>(这次主要是闲聊，vllm源码就不讲啦~)</p>
+<h2 id="⚡-Kuntai-什么是好-坏研究"><a href="#⚡-Kuntai-什么是好-坏研究" class="headerlink" title="⚡ Kuntai: 什么是好&#x2F;坏研究"></a>⚡ Kuntai: 什么是好&#x2F;坏研究</h2><h4 id="Insight-1-人们对什么是糟糕的研究有广泛共识，但对什么是好的研究没有共识。"><a href="#Insight-1-人们对什么是糟糕的研究有广泛共识，但对什么是好的研究没有共识。" class="headerlink" title="Insight 1: 人们对什么是糟糕的研究有广泛共识，但对什么是好的研究没有共识。"></a><strong>Insight 1:</strong> 人们对什么是糟糕的研究有广泛共识，但对什么是好的研究没有共识。</h4><ul>
+<li>一篇USENIX Security论文的研究结果：<ul>
+<li>科学的科学：科学研究背后的规则或趋势。</li>
+</ul>
+</li>
+<li>糟糕研究的例子（主要是技术问题）：<ul>
+<li>不一致。</li>
+<li>不遵循逻辑 → 含糊其辞。</li>
+<li>图表不对齐 → 表明不一致。</li>
+<li>没有动机。</li>
+<li>没有说明为什么它有价值（这不仅仅是研究中的普遍收获）。</li>
+</ul>
+</li>
+<li>PhD培训的目标 → 你知道什么是糟糕的研究，并知道如何避免它。</li>
+</ul>
+<hr>
+<p><strong>但人们不知道什么是好的研究</strong>（远超技术问题）。</p>
+<ul>
+<li>为什么：好的研究与人们的价值体系紧密相关。<ul>
+<li>研究者A：我喜欢有扎实测量的论文。（例如，工业研究者）</li>
+<li>研究者B：我喜欢有清晰抽象的论文。（例如，欧洲系统社区）</li>
+<li>研究者C：我喜欢有硬件数据的论文。（例如，移动社区）</li>
+<li>研究者D：我喜欢实现SoTA的论文。（例如，ML社区）</li>
+</ul>
+</li>
+<li>即使人们对好的研究有价值体系，在短期内做好的研究并不一定有回报。</li>
+</ul>
+<hr>
+<h4 id="Insight-2-区分最优秀的工程师-最优秀的人不是他们的技能-能力，而是他们的选择。"><a href="#Insight-2-区分最优秀的工程师-最优秀的人不是他们的技能-能力，而是他们的选择。" class="headerlink" title="Insight 2: 区分最优秀的工程师&#x2F;最优秀的人不是他们的技能&#x2F;能力，而是他们的选择。"></a><strong>Insight 2:</strong> 区分最优秀的工程师&#x2F;最优秀的人不是他们的技能&#x2F;能力，而是他们的选择。</h4><ul>
+<li>关键：尝试做出一个好的选择，然后全力以赴。</li>
+<li>如何做出好的选择：沟通是关键。广泛与他人沟通，然后做出自己的选择。</li>
+<li>（个人观点）趋势&#x2F;未来非常难以预测，充满巧合 → 我们最好领先他人半步 → 做开源研究，贴近工业。</li>
+</ul>
+<hr>
+<p><strong>系统社区：</strong> 应用非常流行 → 但我们在实践中难以扩展它们 → 我们需要更好的系统。</p>
+<ul>
+<li>关键词：非常务实，在大规模上评估，与流行应用紧密结合。</li>
+</ul>
+<p><strong>为什么一些教授不希望学生进入工业界：</strong></p>
+<ul>
+<li>因为研究的风险远小于在现实世界中做事情。</li>
+</ul>
+<hr>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a target="_blank" rel="noopener" href="https://github.com/KevinCheung2259">Cheung</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="http://kevincheung2259.github.io/2025/05/02/vLLM-EP07/">http://kevincheung2259.github.io/2025/05/02/vLLM-EP07/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://KevinCheung2259.github.io" target="_blank">Cheung's Blog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/LLM/">LLM</a><a class="post-meta__tags" href="/tags/Inference/">Inference</a><a class="post-meta__tags" href="/tags/vLLM/">vLLM</a><a class="post-meta__tags" href="/tags/MoE/">MoE</a></div><div class="post_share"><div class="social-share" data-image="/posts_img/vLLM/cover.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/js/social-share.min.js" defer></script></div></div><div class="post-reward"><div class="reward-button"><i class="fas fa-qrcode"></i>赞助</div><div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="/static_img/wechat.jpg" target="_blank"><img class="post-qr-code-img" src= "/static_img/loading.gif" data-lazy-src="/static_img/wechat.jpg" alt="微信"/></a><div class="post-qr-code-desc">微信</div></li><li class="reward-item"><a href="/static_img/alipay.jpg" target="_blank"><img class="post-qr-code-img" src= "/static_img/loading.gif" data-lazy-src="/static_img/alipay.jpg" alt="支付宝"/></a><div class="post-qr-code-desc">支付宝</div></li></ul></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/2025/04/21/vLLM-EP06/" title="EP06-vLLM源码讲解直播笔记-vLLM v1 仙人指路"><img class="cover" src= "/static_img/loading.gif" data-lazy-src="/posts_img/vLLM/cover.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">EP06-vLLM源码讲解直播笔记-vLLM v1 仙人指路</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2025/03/25/vLLM-EP02/" title="EP02-vLLM源码讲解直播笔记-分布式通信与并行策略"><img class="cover" src= "/static_img/loading.gif" data-lazy-src="/posts_img/vLLM/cover.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2025-03-25</div><div class="title">EP02-vLLM源码讲解直播笔记-分布式通信与并行策略</div></div></a></div><div><a href="/2025/03/30/vLLM-EP03/" title="EP03-vLLM源码讲解直播笔记-PD分离"><img class="cover" src= "/static_img/loading.gif" data-lazy-src="/posts_img/vLLM/cover.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2025-03-30</div><div class="title">EP03-vLLM源码讲解直播笔记-PD分离</div></div></a></div><div><a href="/2025/04/05/vLLM-EP04/" title="EP04-vLLM源码讲解直播笔记-Speculative Decoding"><img class="cover" src= "/static_img/loading.gif" data-lazy-src="/posts_img/vLLM/cover.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2025-04-05</div><div class="title">EP04-vLLM源码讲解直播笔记-Speculative Decoding</div></div></a></div><div><a href="/2025/04/16/vLLM-EP05/" title="EP05-vLLM源码讲解直播笔记-Prefix Caching"><img class="cover" src= "/static_img/loading.gif" data-lazy-src="/posts_img/vLLM/cover.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2025-04-16</div><div class="title">EP05-vLLM源码讲解直播笔记-Prefix Caching</div></div></a></div><div><a href="/2025/04/21/vLLM-EP06/" title="EP06-vLLM源码讲解直播笔记-vLLM v1 仙人指路"><img class="cover" src= "/static_img/loading.gif" data-lazy-src="/posts_img/vLLM/cover.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2025-04-21</div><div class="title">EP06-vLLM源码讲解直播笔记-vLLM v1 仙人指路</div></div></a></div><div><a href="/2025/03/29/CacheBlend/" title="CacheBlend-高效提高KVCache复用性的方法"><img class="cover" src= "/static_img/loading.gif" data-lazy-src="/posts_img/CacheBlend/1.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2025-03-29</div><div class="title">CacheBlend-高效提高KVCache复用性的方法</div></div></a></div></div></div><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="gitalk-container"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src= "/static_img/loading.gif" data-lazy-src="/static_img/me.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Cheung</div><div class="author-info__description">个人博客，主要记录有关看论文、学习计算机科学的笔记</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">16</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">14</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">3</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/KevinCheung2259"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/KevinCheung2259" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="https://blog.csdn.net/zy_sysu?type=blog" target="_blank" title="CSDN"><i class="fa fa-book-open"></i></a><a class="social-icon" href="tencent://AddContact/?fromId=45&amp;fromSubId=1&amp;subcmd=all&amp;uin=2651309292&amp;website=www.oicqzone.com" target="_blank" title="QQ"><i class="fab fa-qq"></i></a><a class="social-icon" href="mailto:2651309292.com" target="_blank" title="Email"><i class="fas fa-envelope-open-text"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">任重道远，毋忘奋斗</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#FIXME-EP07-%E8%81%8A%E8%81%8AMoE-%E9%97%B2%E8%B0%88%E5%AD%A6%E6%9C%AF%E5%93%81%E5%91%B3"><span class="toc-number">1.</span> <span class="toc-text">[FIXME] [EP07] 聊聊MoE+闲谈学术品味</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%92%A5-%E5%BC%80%E5%9C%BA"><span class="toc-number">1.1.</span> <span class="toc-text">💥 开场</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#OpenMoE"><span class="toc-number">1.2.</span> <span class="toc-text">OpenMoE</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#The-original-MoE"><span class="toc-number">1.2.1.</span> <span class="toc-text">The original MoE</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#History-of-MoEs"><span class="toc-number">1.2.2.</span> <span class="toc-text">History of MoEs</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#2017-LSTM-MoE"><span class="toc-number">1.2.2.1.</span> <span class="toc-text">2017: LSTM + MoE</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2021-Gshard-from-Google-MLSys"><span class="toc-number">1.2.2.2.</span> <span class="toc-text">2021: Gshard from Google (MLSys)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2021-Switch-Transformer"><span class="toc-number">1.2.2.3.</span> <span class="toc-text">2021: Switch Transformer</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2023-OpenMoE-%E2%86%92-%E4%B8%80%E7%B3%BB%E5%88%97%E5%BC%80%E6%BA%90MoE%E6%A8%A1%E5%9E%8B"><span class="toc-number">1.2.2.4.</span> <span class="toc-text">2023: OpenMoE → 一系列开源MoE模型</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-number">1.2.2.5.</span> <span class="toc-text">总结</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%93%8C-Formal-definiton"><span class="toc-number">1.3.</span> <span class="toc-text">📌 Formal definiton</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#TopK-selection"><span class="toc-number">1.3.1.</span> <span class="toc-text">TopK selection</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Balanced-loading"><span class="toc-number">1.3.2.</span> <span class="toc-text">Balanced loading</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-%E5%A4%AA%E5%A4%9Atoken%E8%A2%AB%E5%8F%91%E9%80%81"><span class="toc-number">1.3.2.1.</span> <span class="toc-text">1. 太多token被发送</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-%E5%A4%AA%E5%B0%91token%E8%A2%AB%E5%88%86%E9%85%8D"><span class="toc-number">1.3.2.2.</span> <span class="toc-text">2. 太少token被分配</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Training-on-MoE-multi-turn-is-worse"><span class="toc-number">1.3.3.</span> <span class="toc-text">Training on MoE: multi-turn is worse?</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#MoE%E4%BC%9A%E4%B8%93%E9%97%A8%E5%8C%96%E5%90%97%EF%BC%9F"><span class="toc-number">1.3.4.</span> <span class="toc-text">MoE会专门化吗？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Context-independent-specialization"><span class="toc-number">1.3.5.</span> <span class="toc-text">Context-independent specialization</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%93%E5%AE%B6%E4%BC%9A%E8%81%9A%E7%B1%BB%E7%9B%B8%E4%BC%BCtoken%E5%90%97%EF%BC%9F"><span class="toc-number">1.3.5.1.</span> <span class="toc-text">专家会聚类相似token吗？</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88Context-independent%EF%BC%9F%E6%97%A9%E6%9C%9F%E8%B7%AF%E7%94%B1%E5%AD%A6%E4%B9%A0"><span class="toc-number">1.3.6.</span> <span class="toc-text">为什么Context-independent？早期路由学习</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9C%AB%E7%AB%AFtoken%E4%B8%A2%E5%A4%B1"><span class="toc-number">1.3.7.</span> <span class="toc-text">末端token丢失</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%91%E6%9C%9F%E8%BF%9B%E5%B1%95%EF%BC%9AMegablock"><span class="toc-number">1.3.8.</span> <span class="toc-text">近期进展：Megablock</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#DeepSeek-MoE"><span class="toc-number">1.3.9.</span> <span class="toc-text">DeepSeek MoE</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9B%B4%E5%A4%9A%E6%80%9D%E8%80%83"><span class="toc-number">1.3.10.</span> <span class="toc-text">更多思考</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BD%93%E6%97%B6%E7%9A%84Takeaways"><span class="toc-number">1.3.11.</span> <span class="toc-text">当时的Takeaways</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%94%94-vLLM-MoE%E6%94%AF%E6%8C%81"><span class="toc-number">1.4.</span> <span class="toc-text">🔔 vLLM MoE支持</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E2%9A%A1-Kuntai-%E4%BB%80%E4%B9%88%E6%98%AF%E5%A5%BD-%E5%9D%8F%E7%A0%94%E7%A9%B6"><span class="toc-number">1.5.</span> <span class="toc-text">⚡ Kuntai: 什么是好&#x2F;坏研究</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Insight-1-%E4%BA%BA%E4%BB%AC%E5%AF%B9%E4%BB%80%E4%B9%88%E6%98%AF%E7%B3%9F%E7%B3%95%E7%9A%84%E7%A0%94%E7%A9%B6%E6%9C%89%E5%B9%BF%E6%B3%9B%E5%85%B1%E8%AF%86%EF%BC%8C%E4%BD%86%E5%AF%B9%E4%BB%80%E4%B9%88%E6%98%AF%E5%A5%BD%E7%9A%84%E7%A0%94%E7%A9%B6%E6%B2%A1%E6%9C%89%E5%85%B1%E8%AF%86%E3%80%82"><span class="toc-number">1.5.0.1.</span> <span class="toc-text">Insight 1: 人们对什么是糟糕的研究有广泛共识，但对什么是好的研究没有共识。</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Insight-2-%E5%8C%BA%E5%88%86%E6%9C%80%E4%BC%98%E7%A7%80%E7%9A%84%E5%B7%A5%E7%A8%8B%E5%B8%88-%E6%9C%80%E4%BC%98%E7%A7%80%E7%9A%84%E4%BA%BA%E4%B8%8D%E6%98%AF%E4%BB%96%E4%BB%AC%E7%9A%84%E6%8A%80%E8%83%BD-%E8%83%BD%E5%8A%9B%EF%BC%8C%E8%80%8C%E6%98%AF%E4%BB%96%E4%BB%AC%E7%9A%84%E9%80%89%E6%8B%A9%E3%80%82"><span class="toc-number">1.5.0.2.</span> <span class="toc-text">Insight 2: 区分最优秀的工程师&#x2F;最优秀的人不是他们的技能&#x2F;能力，而是他们的选择。</span></a></li></ol></li></ol></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2025/05/02/vLLM-EP07/" title="EP07-MoE+闲谈学术品味"><img src= "/static_img/loading.gif" data-lazy-src="/posts_img/vLLM/cover.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="EP07-MoE+闲谈学术品味"/></a><div class="content"><a class="title" href="/2025/05/02/vLLM-EP07/" title="EP07-MoE+闲谈学术品味">EP07-MoE+闲谈学术品味</a><time datetime="2025-05-02T15:35:34.000Z" title="发表于 2025-05-02 23:35:34">2025-05-02</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2025/04/21/vLLM-EP06/" title="EP06-vLLM源码讲解直播笔记-vLLM v1 仙人指路"><img src= "/static_img/loading.gif" data-lazy-src="/posts_img/vLLM/cover.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="EP06-vLLM源码讲解直播笔记-vLLM v1 仙人指路"/></a><div class="content"><a class="title" href="/2025/04/21/vLLM-EP06/" title="EP06-vLLM源码讲解直播笔记-vLLM v1 仙人指路">EP06-vLLM源码讲解直播笔记-vLLM v1 仙人指路</a><time datetime="2025-04-21T02:33:01.000Z" title="发表于 2025-04-21 10:33:01">2025-04-21</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2025/04/16/vLLM-EP05/" title="EP05-vLLM源码讲解直播笔记-Prefix Caching"><img src= "/static_img/loading.gif" data-lazy-src="/posts_img/vLLM/cover.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="EP05-vLLM源码讲解直播笔记-Prefix Caching"/></a><div class="content"><a class="title" href="/2025/04/16/vLLM-EP05/" title="EP05-vLLM源码讲解直播笔记-Prefix Caching">EP05-vLLM源码讲解直播笔记-Prefix Caching</a><time datetime="2025-04-16T06:20:03.000Z" title="发表于 2025-04-16 14:20:03">2025-04-16</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2025/04/05/vLLM-EP04/" title="EP04-vLLM源码讲解直播笔记-Speculative Decoding"><img src= "/static_img/loading.gif" data-lazy-src="/posts_img/vLLM/cover.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="EP04-vLLM源码讲解直播笔记-Speculative Decoding"/></a><div class="content"><a class="title" href="/2025/04/05/vLLM-EP04/" title="EP04-vLLM源码讲解直播笔记-Speculative Decoding">EP04-vLLM源码讲解直播笔记-Speculative Decoding</a><time datetime="2025-04-05T09:44:31.000Z" title="发表于 2025-04-05 17:44:31">2025-04-05</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2025/03/30/vLLM-EP03/" title="EP03-vLLM源码讲解直播笔记-PD分离"><img src= "/static_img/loading.gif" data-lazy-src="/posts_img/vLLM/cover.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="EP03-vLLM源码讲解直播笔记-PD分离"/></a><div class="content"><a class="title" href="/2025/03/30/vLLM-EP03/" title="EP03-vLLM源码讲解直播笔记-PD分离">EP03-vLLM源码讲解直播笔记-PD分离</a><time datetime="2025-03-30T11:22:07.000Z" title="发表于 2025-03-30 19:22:07">2025-03-30</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2025 By Cheung</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=4.13.0"></script><script src="/js/main.js?v=4.13.0"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload@17.8.8/dist/lazyload.iife.min.js"></script><div class="js-pjax"><script>(() => {
+  const initGitalk = () => {
+    const gitalk = new Gitalk(Object.assign({
+      clientID: 'Ov23liYwVu9ic2D9PEDf',
+      clientSecret: 'a4ba82ab53b44665bb89718447b5a787223e14ec',
+      repo: 'kevincheung2259.github.io',
+      owner: 'kevincheung2259',
+      admin: ['kevincheung2259'],
+      id: '5da8f67a085185256d585612a4d2c130',
+      updateCountCallback: commentCount
+    },null))
+
+    gitalk.render('gitalk-container')
+  }
+
+  const loadGitalk = async() => {
+    if (typeof Gitalk === 'function') initGitalk()
+    else {
+      await getCSS('https://cdn.jsdelivr.net/npm/gitalk@1.8.0/dist/gitalk.min.css')
+      await getScript('https://cdn.jsdelivr.net/npm/gitalk@1.8.0/dist/gitalk.min.js')
+      initGitalk()
+    }
+  }
+  
+  const commentCount = n => {
+    const isCommentCount = document.querySelector('#post-meta .gitalk-comment-count')
+    if (isCommentCount) {
+      isCommentCount.textContent= n
+    }
+  }
+
+  if ('Gitalk' === 'Gitalk' || !true) {
+    if (true) btf.loadComment(document.getElementById('gitalk-container'), loadGitalk)
+    else loadGitalk()
+  } else {
+    window.loadOtherComment = loadGitalk
+  }
+})()</script></div><script defer="defer" id="ribbon" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/dist/canvas-ribbon.min.js" size="150" alpha="0.6" zIndex="-1" mobile="false" data-click="true"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js?v=4.13.0"></script></div></div></body></html>
